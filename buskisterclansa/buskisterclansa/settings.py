@@ -34,6 +34,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     # My apps
     'accounts.apps.AccountsConfig',
+    'movies.apps.MoviesConfig',
 
     # Default apps
     'django.contrib.admin',
