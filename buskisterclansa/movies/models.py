@@ -41,6 +41,7 @@ class Trailer(models.Model):
 
 # Genre  
 class Genre(models.Model):
+    uploader = models.ForeignKey(to=CustomUser, on_delete=models.CASCADE)
     name = models.CharField(unique=True, max_length=50, blank=False, null=False)
     slug = models.SlugField(max_length=50, blank=False, default=None, editable=False)
     
@@ -55,6 +56,7 @@ class Genre(models.Model):
 
 # MovieStaff
 class MovieStaff(models.Model):
+    uploader = models.ForeignKey(to=CustomUser, on_delete=models.CASCADE)
     name = models.CharField(max_length=70, blank=False, null=False)
     bio = models.TextField(max_length=1000, blank=False, null=False)
     image = models.ImageField(blank=True, null=True)
@@ -91,6 +93,7 @@ class Script(models.Model):
 
 # Company
 class Company(models.Model):
+    uploader = models.ForeignKey(to=CustomUser, on_delete=models.CASCADE)
     name = models.CharField(max_length=50, blank=False, null=False)
     slug = models.SlugField(max_length=50, blank=False, null=False, editable=False)
     description = models.TextField(max_length=200, blank=False, null=False)
