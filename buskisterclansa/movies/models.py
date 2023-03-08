@@ -3,8 +3,12 @@ from django.db import models
 from django.utils import timezone
 from django.utils.text import slugify
 
+# My apps
+from accounts.models import CustomUser
+
 # Movie
 class Movie(models.Model):
+    uploader = models.ForeignKey(to=CustomUser, on_delete=models.CASCADE, default=None)
     name = models.CharField(max_length=50, blank=False, null=False)
     slug = models.SlugField(max_length=50, editable=False, blank=False, null=False)
     year = models.DateField(default=timezone.now().date(), blank=False, null=False)
@@ -101,4 +105,17 @@ class Company(models.Model):
 
         return super().save(*args, **kwargs)
 
+# Like Dislike
+class MovieLike(models.Model):
+    movie = models.ForeignKey(to=Movie, on_delete=models.CASCADE)
+    user = models.ForeignKey(to=CustomUser, on_delete=models.CASCADE)
+
+    def __str__(self) -> str:
+        return f"{self.user.username} likes {self.movie.name}"
     
+class MovieDislike(models.Model):
+    movie = models.ForeignKey(to=Movie, on_delete=models.CASCADE)
+    user = models.ForeignKey(to=CustomUser, on_delete=models.CASCADE)
+
+    def __str__(self) -> str:
+        return f"{self.user.username} dislikes {self.movie.name}"
