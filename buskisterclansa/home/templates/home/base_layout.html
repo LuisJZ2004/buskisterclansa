@@ -11,6 +11,68 @@
     {% endblock styles %}
 </head>
 <body>
+    <header>
+        <div class="header-top">
+            <div class="logo-container" >
+                <img src="{% static '/home/images/logo.png' %}" alt="logo" width='210px'>
+            </div>
+
+            <div class="search-bar-container">
+                <form action="" method="GET">
+                    <input type="search" placeholder="search">
+                    <span>
+                        <input type="submit">
+                    </span>    
+                </form>
+            </div>
+
+            <div class="log-container">
+                {% if request.user.is_authenticated %}
+                    <a href="#">
+                        logout
+                    </a>
+                {% else %}
+                    <a href="#">
+                        login
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+        
+        <div class="links-container">
+            <div>
+                <a href="#">
+                    Loved by users
+                </a>
+                <span> |</span>
+            </div>
+            <div>
+                <a href="#">
+                    Companies
+                </a>
+                <span> |</span>
+            </div>
+            <div>
+                <a href="#">
+                    News
+                </a>
+                <span> |</span>
+            </div>
+            <div>
+                <a href="#">
+                    Genre
+                </a>
+                <span> |</span>
+            </div>
+            <div>
+                <a href="#">
+                    Most rated
+                </a>
+            </div>
+        </div>
+
+    </header>
+    
     hello world
 </body>
 </html>
