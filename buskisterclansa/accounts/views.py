@@ -6,17 +6,30 @@ from django.views.generic import View
 from .forms import CustomUserCreationForm
 
 class SingInView(View):
-    def post(request):
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return redirect("home:home_path")
+
+        return super().dispatch(request, *args, **kwargs)
+
+    def post(self, request):
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             form.save()
             return redirect(to="accounts:login_path")
         else:
-            context = {
-                'form': form,
-                'errors': dict(form.errors),
-            }
-    def get(request):
+            print(dict(form.errors))
+            return render(
+                request=request,
+                template_name="accounts/sign_in.html",
+                context={
+                    'form': form,
+                    'errors': dict(form.errors),
+                }
+            )
+            
+    def get(self, request):
         return render(
             request=request,
             template_name="accounts/sign_in.html",

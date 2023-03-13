@@ -1,6 +1,107 @@
 {% extends '../home/base_layout.html' %}
 {% load static %}
 
-{% block content %}
+{% block styles %}
+<link rel="stylesheet" href="{% static 'accounts/css/login_1.css' %}">
+<style>
+    .error {
+        margin: 20px;
+        font-size: 1.6rem;
+        color: red;
+    }
+</style>
+{% endblock styles %}
 
+{% block content %}
+<form autocomplete='off' class='form' method="POST" action="{% url 'accounts:sign_in_path' %}">
+    {% csrf_token %}
+  <div class='control'>
+    <h1>
+      Sign in
+    </h1>
+  </div>
+  {% if errors.username %}
+  <h3 class="error">{{errors.username.0}}</h3>
+  {% endif %}
+  <div id="username" class='control block-cube block-input'>
+    <input name='username' placeholder='Username' type='text'>
+    <div class='bg-top'>
+      <div class='bg-inner'></div>
+    </div>
+    <div class='bg-right'>
+      <div class='bg-inner'></div>
+    </div>
+    <div class='bg'>
+      <div class='bg-inner'></div>
+    </div>
+  </div>
+  {% if errors.email %}
+  <h3 class="error">{{errors.email.0}}</h3>
+  {% endif %}
+  <div class='control block-cube block-input'>
+    <input name='email' placeholder='Email' type='text'>
+    <div class='bg-top'>
+      <div class='bg-inner'></div>
+    </div>
+    <div class='bg-right'>
+      <div class='bg-inner'></div>
+    </div>
+    <div class='bg'>
+      <div class='bg-inner'></div>
+    </div>
+  </div>
+  {% if errors.password1 %}
+  <h3 class="error">{{errors.username.0}}</h3>
+  {% endif %}
+  <div class='control block-cube block-input'>
+    <input name='password1' placeholder='Password 1' type='password'>
+    <div class='bg-top'>
+      <div class='bg-inner'></div>
+    </div>
+    <div class='bg-right'>
+      <div class='bg-inner'></div>
+    </div>
+    <div class='bg'>
+      <div class='bg-inner'></div>
+    </div>
+  </div>
+  {% if errors.password2 %}
+  <h3 class="error">{{errors.password2.0}}</h3>
+  {% endif %}
+  <div class='control block-cube block-input'>
+    <input name='password2' placeholder='Password 2' type='password'>
+    <div class='bg-top'>
+      <div class='bg-inner'></div>
+    </div>
+    <div class='bg-right'>
+      <div class='bg-inner'></div>
+    </div>
+    <div class='bg'>
+      <div class='bg-inner'></div>
+    </div>
+  </div>
+  
+  <button class='btn block-cube block-cube-hover' type='submit'>
+    <div class='bg-top'>
+      <div class='bg-inner'></div>
+    </div>
+    <div class='bg-right'>
+      <div class='bg-inner'></div>
+    </div>
+    <div class='bg'>
+      <div class='bg-inner'></div>
+    </div>
+    <div class='text'>
+      Sign In
+    </div>
+    
+  </button>
+
+  </div>
+  <div class='credits'>
+    <a href='https://codepen.io/marko-zub/' target='_blank'>
+      My other codepens
+    </a>
+  </div>
+</form>
 {% endblock content %}

@@ -1,6 +1,90 @@
 {% extends '../home/base_layout.html' %}
 {% load static %}
 
-{% block content %}
+{% block styles %}
+<link rel="stylesheet" href="{% static 'accounts/css/login_1.css' %}">
+{% endblock styles %}
 
+{% block content %}
+<form autocomplete='off' class='form' method="POST" action="{% url 'accounts:login_path' %}">
+  {% csrf_token %}
+  <div class='control'>
+    <h1>
+      Login
+    </h1>
+  </div>
+
+  {% if errors %}
+  <style>
+    .error {
+      color: red;
+      margin-top: 10px;
+      margin-bottom: 30px;
+    }
+  </style>
+  <h2 class="error">Username or password incorrect</h2>
+  {% endif %}
+  <div class='control block-cube block-input'>
+    <input name='username' placeholder='Username or email' type='text'>
+    <div class='bg-top'>
+      <div class='bg-inner'></div>
+    </div>
+    <div class='bg-right'>
+      <div class='bg-inner'></div>
+    </div>
+    <div class='bg'>
+      <div class='bg-inner'></div>
+    </div>
+  </div>
+  <div class='control block-cube block-input'>
+    <input name='password' placeholder='Password' type='password'>
+    <div class='bg-top'>
+      <div class='bg-inner'></div>
+    </div>
+    <div class='bg-right'>
+      <div class='bg-inner'></div>
+    </div>
+    <div class='bg'>
+      <div class='bg-inner'></div>
+    </div>
+  </div>
+  
+  <button class='btn block-cube block-cube-hover' type='submit'>
+    <div class='bg-top'>
+      <div class='bg-inner'></div>
+    </div>
+    <div class='bg-right'>
+      <div class='bg-inner'></div>
+    </div>
+    <div class='bg'>
+      <div class='bg-inner'></div>
+    </div>
+    <div class='text'>
+      Log In
+    </div>
+    
+  </button>
+  <div class="sign-in-link">
+    <style>
+      .sign-in-link {
+        margin: 10px;
+      }
+      .sign-in-link a {
+        color: white;
+      }
+      .sign-in-link a:hover {
+        color: #6b6be3;
+      }
+
+    </style>
+    <a href="{% url 'accounts:sign_in_path' %}">
+      <h2>Don't have account? sign in</h2>
+    </a>
+  </div>
+  <div class='credits'>
+    <a href='https://codepen.io/marko-zub/' target='_blank'>
+      My other codepens
+    </a>
+  </div>
+</form>
 {% endblock content %}

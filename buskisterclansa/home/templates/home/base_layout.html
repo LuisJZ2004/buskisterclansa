@@ -29,11 +29,11 @@
 
             <div class="log-container">
                 {% if request.user.is_authenticated %}
-                    <a href="#">
+                    <a href="{% url 'accounts:logout_path' %}">
                         logout
                     </a>
                 {% else %}
-                    <a href="#">
+                    <a href="{% url 'accounts:login_path' %}">
                         login
                     </a>
                 {% endif %}
