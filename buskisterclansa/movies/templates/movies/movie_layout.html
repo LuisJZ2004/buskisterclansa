@@ -16,13 +16,16 @@
         background-color: white;
     }
 </style>
+{% block my_style %}
+{% endblock my_style %}
+
 {% endblock styles %}
 
 {% block content %}
 <main>
     <div class="main-container">
         {% block movie_content %}
-        {% endblock  %}
+        {% endblock movie_content %}
     </div>
 </main>
 {% endblock content %}
