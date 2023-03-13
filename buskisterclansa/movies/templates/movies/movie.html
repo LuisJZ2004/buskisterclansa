@@ -36,7 +36,7 @@
         color: #ba0015;
         transform: scale(1.2);
       }
-      input{
+      #likeCount, #dislikeCount {
         margin-top: -100px;
         margin-left: 15px;
         width: 100%;
@@ -54,6 +54,7 @@
       main .main-container .movie-center .image-container {
         border: 2px solid black;
         width: 174px;
+        height: 254px;
       }
 
       main .main-container .movie-center {
@@ -61,6 +62,25 @@
         display: flex;
         justify-content: space-around;
         align-items: center
+      }
+
+      .movie-header {
+        border: 2px solid black;
+        display: flex;
+        flex-direction: block;
+      }
+      .movie-header .header-item {
+        padding: 2px;
+        width: 90px;
+        border: 1px solid black;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .movie-header .header-item h3 {
+        color: #4b4bb5;
+        font-family: Arial;
+        font-size: 1.7rem;
       }
 
 </style>
@@ -95,7 +115,7 @@
     </div>
 </div>
 
-<div class="movie-center">
+<div class="movie-center"  style="margin-top: 15px">
     <div class="image-container">
         <img src="{{ movie.image.url }}" alt="movie image" width="170px" height="250px">
     </div>
