@@ -5,10 +5,10 @@ from django.utils.text import slugify
 
 # My apps
 from accounts.models import CustomUser
+from genres.models import Genre
 
 # Movie
 class Movie(models.Model):
-    uploader = models.ForeignKey(to=CustomUser, on_delete=models.CASCADE, default=None)
     name = models.CharField(max_length=50, blank=False, null=False)
     slug = models.SlugField(max_length=50, editable=False, blank=False, null=False)
     year = models.DateField(default=timezone.now().date(), blank=False, null=False)
@@ -16,7 +16,7 @@ class Movie(models.Model):
 
     image = models.ImageField(blank=False, default=None)
 
-    genres = models.ManyToManyField(to='Genre')
+    genres = models.ManyToManyField(to=Genre)
 
     created_by = models.ManyToManyField(to="MovieStaff", through="CreatedBy", related_name="movie_created_by")
     directors = models.ManyToManyField(to="MovieStaff", through="Director", related_name="movie_director")
@@ -39,24 +39,8 @@ class Trailer(models.Model):
     movie = models.ForeignKey(to=Movie, on_delete=models.CASCADE)
     url = models.URLField(max_length=100, unique=True, blank=False, null=False)
 
-# Genre  
-class Genre(models.Model):
-    uploader = models.ForeignKey(to=CustomUser, on_delete=models.CASCADE)
-    name = models.CharField(unique=True, max_length=50, blank=False, null=False)
-    slug = models.SlugField(max_length=50, blank=False, default=None, editable=False)
-    
-    def __str__(self) -> str:
-        return self.name
-
-    def save(self, *args, **kwargs) -> None:
-        self.name = self.name.capitalize()
-        self.slug = slugify(self.name)
-
-        return super().save(*args, **kwargs)
-
 # MovieStaff
 class MovieStaff(models.Model):
-    uploader = models.ForeignKey(to=CustomUser, on_delete=models.CASCADE)
     name = models.CharField(max_length=70, blank=False, null=False)
     bio = models.TextField(max_length=1000, blank=False, null=False)
     image = models.ImageField(blank=True, null=True)
@@ -93,7 +77,6 @@ class Script(models.Model):
 
 # Company
 class Company(models.Model):
-    uploader = models.ForeignKey(to=CustomUser, on_delete=models.CASCADE)
     name = models.CharField(max_length=50, blank=False, null=False)
     slug = models.SlugField(max_length=50, blank=False, null=False, editable=False)
     description = models.TextField(max_length=200, blank=False, null=False)
