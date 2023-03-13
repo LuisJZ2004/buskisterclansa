@@ -37,6 +37,9 @@ INSTALLED_APPS = [
     'accounts.apps.AccountsConfig',
     'movies.apps.MoviesConfig',
     'home.apps.HomeConfig',
+    'companies.apps.CompaniesConfig',
+    'genres.apps.GenresConfig',
+    'movie_staff.apps.MovieStaffConfig',
 
     # Default apps
     'django.contrib.admin',
