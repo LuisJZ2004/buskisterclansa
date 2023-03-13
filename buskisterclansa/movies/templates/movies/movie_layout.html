@@ -1,0 +1,28 @@
+{% extends '../home/base_layout.html' %}
+{% load static %}
+
+{% block styles %}
+<style>
+    main {
+        border: 2px solid white;
+        padding: 10px;
+        display: flex;
+        justify-content: center;
+    }
+    main .main-container {
+        border: 2px solid white;
+        min-width: 900px;
+        min-height: 900px;
+        background-color: white;
+    }
+</style>
+{% endblock styles %}
+
+{% block content %}
+<main>
+    <div class="main-container">
+        {% block movie_content %}
+        {% endblock  %}
+    </div>
+</main>
+{% endblock content %}
