@@ -2,8 +2,47 @@
 {% load static %}
 
 {% block my_style %}
+<style>
+    main .main-container .title {
+        {% comment %} border: 2px solid black; {% endcomment %}
+        padding: 7px;
+    }
+</style>
 {% endblock my_style %}
 
 {% block movie_content %}
-hi
+<div class="title">
+    <h1>{{ movie.name }}</h1>
+</div>
+
+<div class="movie-header">
+    <div class="header-item">
+        <a href="">
+            <h3>
+                Info
+            </h3>
+        </a>
+    </div>
+    <div class="header-item">
+        <a href="">
+            <h3>
+                Reviews
+            </h3>
+        </a>
+    </div>
+    <div class="header-item">
+        <a href="">
+            <h3>
+                Trailers
+            </h3>
+        </a>
+    </div>
+</div>
+
+<div class="movie-center">
+    <div class="image-container">
+        <img src="{{ movie.image.url }}" alt="movie image" width="170px" height="250px">
+    </div>
+</div>
+
 {% endblock movie_content %}
