@@ -7,6 +7,7 @@ from django.utils.text import slugify
 from accounts.models import CustomUser
 from genres.models import Genre
 from movie_staff.models import MovieStaff
+from companies.models import Company
 
 # Movie
 class Movie(models.Model):
@@ -25,8 +26,8 @@ class Movie(models.Model):
     producers = models.ManyToManyField(to=MovieStaff, through="Producer", related_name="movie_producer")
     scripts = models.ManyToManyField(to=MovieStaff, through="Script", related_name="movie_script")
 
-    producer_companies = models.ManyToManyField(to="Company", related_name="as_producer")
-    distributor_companies = models.ManyToManyField(to="Company", related_name="as_distributor")
+    producer_companies = models.ManyToManyField(to=Company, related_name="as_producer")
+    distributor_companies = models.ManyToManyField(to=Company, related_name="as_distributor")
 
     def __str__(self) -> str:
         return self.name
@@ -70,22 +71,6 @@ class Script(models.Model):
     movie_staff = models.ForeignKey(to=MovieStaff, on_delete=models.CASCADE)
 
     order = models.IntegerField(default=0, blank=False, null=False)
-
-# Company
-class Company(models.Model):
-    name = models.CharField(max_length=50, blank=False, null=False)
-    slug = models.SlugField(max_length=50, blank=False, null=False, editable=False)
-    description = models.TextField(max_length=200, blank=False, null=False)
-
-    image = models.ImageField(blank=True, null=True)
-
-    def __str__(self) -> str:
-        return self.name
-    
-    def save(self, *args, **kwargs) -> None:
-        self.slug = slugify(self.name)
-
-        return super().save(*args, **kwargs)
 
 # Like Dislike
 class MovieLike(models.Model):
