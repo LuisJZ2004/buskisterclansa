@@ -2,11 +2,67 @@
 {% load static %}
 
 {% block my_style %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
 <style>
     main .main-container .title {
         {% comment %} border: 2px solid black; {% endcomment %}
         padding: 7px;
     }
+    {% comment %} like dislike styles {% endcomment %}
+    .wrapper{
+        border: 1px solid black;
+        width:310px;
+        height: 240px;
+        display: grid;
+        grid-template-columns: 1.5fr 1.5fr;
+        background: #3accfd;
+        {% comment %} box-shadow: 12px 12px 24px #2a93b6,
+                    -12px -12px 24px #4affff; {% endcomment %}
+        border-radius: 30px;
+      }
+      .like,.dislike,.subscribe{
+        display: grid;
+        place-items : center;
+      }
+      .icon{
+        margin-top: 70px;
+        font-size: 80px;
+        color: #0086b3;
+        cursor: pointer;
+        text-shadow: 5px 8px 15px #2a93b6;
+        transition: .5s;
+      }
+      .icon:hover{
+        color: #ba0015;
+        transform: scale(1.2);
+      }
+      input{
+        margin-top: -100px;
+        margin-left: 15px;
+        width: 100%;
+        border: none;
+        outline: none;
+        text-align: center;
+        background: none;
+        font-size: 30px;
+        font-weight: 800;
+        pointer-events: none;
+        color: #0086b3;
+        text-shadow: 2px 2px 3px #2a93b6;
+      }
+      {% comment %} end like dislike styles {% endcomment %}
+      main .main-container .movie-center .image-container {
+        border: 2px solid black;
+        width: 174px;
+      }
+
+      main .main-container .movie-center {
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+        align-items: center
+      }
+
 </style>
 {% endblock my_style %}
 
@@ -43,6 +99,23 @@
     <div class="image-container">
         <img src="{{ movie.image.url }}" alt="movie image" width="170px" height="250px">
     </div>
+
+    <form action="#">
+        <div class="wrapper">
+            <div class="like">
+                <i onclick="javascript: submit()" class="fas fa-heart icon">
+                </i>
+                <br>
+                <input id="likeCount" type="number" value="0">
+            </div>
+            <div class="dislike">
+                <i onclick="count1()" class="fas fa-heart-broken icon"></i>
+                <br>
+                <input id="dislikeCount" type="number" value="0">
+            </div>
+        </div>
+    </form>
+
 </div>
 
 {% endblock movie_content %}
