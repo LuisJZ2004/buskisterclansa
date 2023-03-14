@@ -42,7 +42,30 @@
       }
       
       {% comment %} end like dislike styles {% endcomment %}
-      
+      main .main-container .movie-center .image-container {
+        border: 2px solid black;
+        width: 174px;
+        height: 254px;
+      }
+
+      main .main-container .movie-center {
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+        align-items: center
+      }
+
+      .general-info .synopsis {
+        margin-top: 20px;
+        margin-left: 15px;
+        width: 750px;
+        text-align: left;
+      }
+
+      .general-info .synopsis p {
+        font-size: 1.9rem;
+        font-family: 'Times New Roman', Times, serif;
+      }
 </style>
 {% endblock my_style %}
 
@@ -72,6 +95,23 @@
         </div>
     </form>
 
+</div>
+<br>
+<br>
+<hr>
+<div class="general-info">
+  
+  <div class="synopsis">
+    <p>
+      {{ movie.synopsis }}
+    </p>
+  </div>
+  <br>
+  <br>
+  <hr>
+  <div class="staff">
+    
+  </div>
 </div>
 
 
