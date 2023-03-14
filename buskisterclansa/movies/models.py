@@ -48,17 +48,26 @@ class CreatedBy(models.Model):
 
     order = models.IntegerField(default=0, blank=False, null=False)
 
+    def __str__(self) -> str:
+        return f"'{self.movie_staff.name}' as creator of '{self.movie.name}'"
+
 class Cast(models.Model):
     movie = models.ForeignKey(to=Movie, on_delete=models.CASCADE)
     movie_staff = models.ForeignKey(to=MovieStaff, on_delete=models.CASCADE)
 
     order = models.IntegerField(default=0, blank=False, null=False)
 
+    def __str__(self) -> str:
+        return f"'{self.movie_staff.name}' as cast '{self.movie.name}'"
+    
 class Director(models.Model):
     movie = models.ForeignKey(to=Movie, on_delete=models.CASCADE)
     movie_staff = models.ForeignKey(to=MovieStaff, on_delete=models.CASCADE)
 
     order = models.IntegerField(default=0, blank=False, null=False)
+
+    def __str__(self) -> str:
+        return f"'{self.movie_staff.name}' as director of '{self.movie.name}'"
 
 class Producer(models.Model):
     movie = models.ForeignKey(to=Movie, on_delete=models.CASCADE)
@@ -66,11 +75,17 @@ class Producer(models.Model):
 
     order = models.IntegerField(default=0, blank=False, null=False)
 
+    def __str__(self) -> str:
+        return f"'{self.movie_staff.name}' as producer of '{self.movie.name}'"
+
 class Script(models.Model):
     movie = models.ForeignKey(to=Movie, on_delete=models.CASCADE)
     movie_staff = models.ForeignKey(to=MovieStaff, on_delete=models.CASCADE)
 
     order = models.IntegerField(default=0, blank=False, null=False)
+
+    def __str__(self) -> str:
+        return f"'{self.movie_staff.name}' as script of '{self.movie.name}'"
 
 # Like Dislike
 class MovieLike(models.Model):
@@ -78,11 +93,11 @@ class MovieLike(models.Model):
     user = models.ForeignKey(to=CustomUser, on_delete=models.CASCADE)
 
     def __str__(self) -> str:
-        return f"{self.user.username} likes {self.movie.name}"
+        return f"{self.user.username} likes '{self.movie.name}'"
     
 class MovieDislike(models.Model):
     movie = models.ForeignKey(to=Movie, on_delete=models.CASCADE)
     user = models.ForeignKey(to=CustomUser, on_delete=models.CASCADE)
 
     def __str__(self) -> str:
-        return f"{self.user.username} dislikes {self.movie.name}"
+        return f"{self.user.username} dislikes '{self.movie.name}'"

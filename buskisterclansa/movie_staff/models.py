@@ -7,6 +7,9 @@ class MovieStaff(models.Model):
     bio = models.TextField(max_length=1000, blank=False, null=False)
     image = models.ImageField(blank=True, null=True)
 
+    def __str__(self) -> str:
+        return self.name
+
     def save(self, *args, **kwargs) -> None:
         self.slug = slugify(self.name)
 
