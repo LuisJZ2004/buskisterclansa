@@ -22,3 +22,15 @@ class MovieView(DetailView):
 
     def get_object(self, *args, **kwargs):
         return get_object_or_404(self.get_queryset(), pk=self.kwargs.get("pk"), slug=self.kwargs.get("slug"))
+    
+    def get_context_data(self, **kwargs):
+
+        context = {
+            self.context_object_name: self.get_object(),
+            "directors": self.get_object().directors.all().order_by("director__order"),
+            "created_by": self.get_object().created_by.all().order_by("createdby__order"),
+            "script": self.get_object().scripts.all().order_by("script__order"),
+            "producers": self.get_object().producers.all().order_by("producer__order"),
+        }
+
+        return context

@@ -69,9 +69,10 @@
 
       .general-info .staff {
         align-items: center;
+        margin-left: 80px;
       }
       .general-info .staff h4 {
-        max-width: 100px;
+        max-width: 150px;
         font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
         font-size: 2.0rem;
         margin-bottom: 5px;
@@ -129,6 +130,8 @@
   <br>
   <br>
   <hr>
+  <br>
+
   <div class="staff">
     <span>
       <h4>genres</h4>
@@ -137,27 +140,39 @@
       <a href="">{{genre.name}},</a>
       {% endfor %}
     </span>
+    <br>
+    <br>
 
     <span>
-      <h4>genres</h4>
-      <a href="">{{movie.genres.all.first.name}}</a>
-      <a href="">{{movie.genres.all.first.name}}</a>
-      <a href="">{{movie.genres.all.first.name}}</a>
+      <h4>Created by</h4>
+
+      {% for creator in created_by %}
+      <a href="">{{creator.name}},</a>
+      {% endfor %}
     </span>
+    <br>
+    <br>
 
     <span>
-      <h4>genres</h4>
-      <a href="">{{movie.genres.all.first.name}}</a>
-      <a href="">{{movie.genres.all.first.name}}</a>
-      <a href="">{{movie.genres.all.first.name}}</a>
+      <h4>Directors</h4>
+
+      {% for director in directors %}
+      <a href="">{{director.name}},</a>
+      {% endfor %}
     </span>
+    <br>
+    <br>
 
     <span>
-      <h4>genres</h4>
-      <a href="">{{movie.genres.all.first.name}}</a>
-      <a href="">{{movie.genres.all.first.name}}</a>
-      <a href="">{{movie.genres.all.first.name}}</a>
+      <h4>Script</h4>
+
+      {% for creator in script %}
+      <a href="">{{creator.name}},</a>
+      {% endfor %}
     </span>
+    <br>
+    <br>
+
   </div>
 </div>
 
