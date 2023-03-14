@@ -27,7 +27,6 @@ class Movie(models.Model):
     scripts = models.ManyToManyField(to=MovieStaff, through="Script", related_name="movie_script")
 
     producer_companies = models.ManyToManyField(to=Company, related_name="as_producer")
-    distributor_companies = models.ManyToManyField(to=Company, related_name="as_distributor")
 
     def __str__(self) -> str:
         return self.name

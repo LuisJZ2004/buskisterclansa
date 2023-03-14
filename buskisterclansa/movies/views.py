@@ -32,6 +32,7 @@ class MovieView(DetailView):
             "script": self.get_object().scripts.all().order_by("script__order"),
             "producers": self.get_object().producers.all().order_by("producer__order"),
             "cast": self.get_object().casts.all().order_by("cast__order")[:5],
+            "companies": self.get_object().producer_companies.all(),
             "cast_len": len(self.get_object().casts.all().order_by("cast__order")),
         }
 
