@@ -1,0 +1,73 @@
+main .main-container .title {
+    padding: 7px;
+}
+.wrapper{
+    border: 1px solid black;
+    width:310px;
+    height: 240px;
+    display: grid;
+    grid-template-columns: 1.5fr 1.5fr;
+    background: #3accfd;
+    border-radius: 30px;
+  }
+  .like,.dislike,.subscribe{
+    display: grid;
+    place-items : center;
+  }
+  .icon{
+    margin-top: 70px;
+    font-size: 80px;
+    color: #0086b3;
+    cursor: pointer;
+    text-shadow: 5px 8px 15px #2a93b6;
+    transition: .5s;
+  }
+  .icon:hover{
+    color: #ba0015;
+    transform: scale(1.2);
+  }
+  #likeCount, #dislikeCount {
+    margin-top: -100px;
+    margin-left: 15px;
+    width: 100%;
+    border: none;
+    outline: none;
+    text-align: center;
+    background: none;
+    font-size: 30px;
+    font-weight: 800;
+    pointer-events: none;
+    color: #0086b3;
+    text-shadow: 2px 2px 3px #2a93b6;
+  }
+  main .main-container .movie-center .image-container {
+    border: 2px solid black;
+    width: 174px;
+    height: 254px;
+  }
+
+  main .main-container .movie-center {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center
+  }
+
+  .movie-header {
+    border: 2px solid black;
+    display: flex;
+    flex-direction: block;
+  }
+  .movie-header .header-item {
+    padding: 2px;
+    width: 90px;
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .movie-header .header-item h3 {
+    color: #4b4bb5;
+    font-family: Arial;
+    font-size: 1.7rem;
+  }

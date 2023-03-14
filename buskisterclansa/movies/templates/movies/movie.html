@@ -20,6 +20,10 @@
                     -12px -12px 24px #4affff; {% endcomment %}
         border-radius: 30px;
       }
+      .wrapper h2 {
+        font-size: 2.1rem;
+        font-family: monospace;
+      }
       .like,.dislike,.subscribe{
         display: grid;
         place-items : center;
@@ -36,20 +40,7 @@
         color: #ba0015;
         transform: scale(1.2);
       }
-      #likeCount, #dislikeCount {
-        margin-top: -100px;
-        margin-left: 15px;
-        width: 100%;
-        border: none;
-        outline: none;
-        text-align: center;
-        background: none;
-        font-size: 30px;
-        font-weight: 800;
-        pointer-events: none;
-        color: #0086b3;
-        text-shadow: 2px 2px 3px #2a93b6;
-      }
+      
       {% comment %} end like dislike styles {% endcomment %}
       main .main-container .movie-center .image-container {
         border: 2px solid black;
@@ -120,18 +111,21 @@
         <img src="{{ movie.image.url }}" alt="movie image" width="170px" height="250px">
     </div>
 
-    <form action="#">
+    <form action="">
         <div class="wrapper">
             <div class="like">
-                <i onclick="javascript: submit()" class="fas fa-heart icon">
-                </i>
-                <br>
-                <input id="likeCount" type="number" value="0">
+                <button type="submit" style="color: transparent; background-color: transparent; border-color: transparent; cursor: default;">
+                  <i onclick="javascript: submit()" class="fas fa-heart icon">
+                  </i>
+
+                </button>
+                <h2>0</h2>
             </div>
             <div class="dislike">
+              <button type="submit" style="color: transparent; background-color: transparent; border-color: transparent; cursor: default;">
                 <i onclick="count1()" class="fas fa-heart-broken icon"></i>
-                <br>
-                <input id="dislikeCount" type="number" value="0">
+              </button>
+                <h2>122</h2>
             </div>
         </div>
     </form>
