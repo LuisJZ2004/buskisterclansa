@@ -15,6 +15,42 @@
         min-height: 900px;
         background-color: white;
     }
+    .title h1 {
+        font-size: 2.2rem;
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+      }
+
+      main .main-container .movie-center .image-container {
+        border: 2px solid black;
+        width: 174px;
+        height: 254px;
+      }
+
+      main .main-container .movie-center {
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+        align-items: center
+      }
+
+      .movie-header {
+        border: 2px solid black;
+        display: flex;
+        flex-direction: block;
+      }
+      .movie-header .header-item {
+        padding: 2px;
+        width: 90px;
+        border: 1px solid black;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .movie-header .header-item h3 {
+        color: #4b4bb5;
+        font-family: Arial;
+        font-size: 1.7rem;
+      }
 </style>
 {% block my_style %}
 {% endblock my_style %}
@@ -24,6 +60,34 @@
 {% block content %}
 <main>
     <div class="main-container">
+        <div class="title">
+            <h1>{{ movie.name }}</h1>
+        </div>
+        
+        <div class="movie-header">
+            <div class="header-item">
+                <a href="">
+                    <h3>
+                        Info
+                    </h3>
+                </a>
+            </div>
+            <div class="header-item">
+                <a href="">
+                    <h3>
+                        Reviews
+                    </h3>
+                </a>
+            </div>
+            <div class="header-item">
+                <a href="">
+                    <h3>
+                        Trailers
+                    </h3>
+                </a>
+            </div>
+        </div>
+        
         {% block movie_content %}
         {% endblock movie_content %}
     </div>
