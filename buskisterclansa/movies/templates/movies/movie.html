@@ -87,6 +87,53 @@
       .general-info .staff a:hover {
         color: #9738ff;
       }
+
+      .cast .actor img{
+        border-radius: 50px;
+      }
+      .cast .actor {
+        border: 2px solid black;
+        width: 350px;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center
+      }
+
+      .cast{
+        border: 2px solid black;
+        padding: 30px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      .cast .cast-title{
+        margin-bottom: 25px;
+      }
+      .cast .cast-title h2 {
+        color: black;
+        font-family: Arial;
+        font-size: 3.0rem;
+      }
+      .cast .actor span{
+        margin-left: 20px;
+      }
+      .cast .actor span a {
+        font-size: 2.1rem;
+        font-family: Arial;
+        color: black;
+      }
+      .cast .actor span a:hover {
+        color: #747474;
+      }
+      .cast .view-more a h2{
+        font-size: 2.3rem;
+        font-family: monospace;
+        color: black;
+      }
+      .cast .view-more a h2:hover{
+        color: #747474;
+      }
 </style>
 {% endblock my_style %}
 
@@ -176,6 +223,30 @@
   </div>
 </div>
 
+<div class="cast">
+  <div class="cast-title">
+    <h2>Cast</h2>
+  </div>
+  {% for staff in cast %}
+  <div class="actor">
+    <img src={{ staff.image.url }} alt="" width="110px" >
+    <span>
+      <a href="">
+        {{ staff.name }}
+      </a>
+    </span>
+  </div>
+  {% endfor %}
+
+  {% if cast_len > 5 %}
+  <div class="view-more">
+    <a href="">
+      <h2>View more</h2>
+    </a>
+  </div>
+  
+  {% endif %}
+</div>
 
 
 {% endblock movie_content %}
