@@ -48,7 +48,7 @@ class DragMovieStaffView(View):
 
         raise Http404
 
-    def get(self, request, pk, slug):
+    def get(self, request, *args, **kwargs):
 
         if not request.GET.get("job"):
             raise Http404
@@ -70,5 +70,11 @@ class DragMovieStaffView(View):
             template_name="movies/drag_movie_staff.html",
             context={
                 "objects": get_relation_staff()[request.GET.get("job")], 
+                "job": request.GET.get("job"),
+                "pk": self.kwargs.get("pk"),
+                "slug": self.kwargs.get("slug"),
             }
         )
+    
+    def put(self, request, *args, **kwargs):
+        pass

@@ -12,17 +12,27 @@
     <script src="{% static 'movies/js/drag_movie_staff.js' %}" defer></script>
   </head>
   <body>
-    <ul class="sortable-list">
 
-      {% for object in objects %}
-      <li class="item" draggable="true">
-        <div class="details">
-          <img src={{ object.image.url }}>
-          <span>{{ object.name }}</span>
-        </div>
-        <i class="uil uil-draggabledots"></i>
-      </li>
-      {% endfor %}
+    <form action="{% url 'movies:drag_movie_staff_path' slug pk %}?job={{job}}" method="PUT">
+      {% csrf_token %}
+      <ul class="sortable-list">
+
+        {% for object in objects %}
+        <li class="item" draggable="true">
+          <div class="details">
+            <img src={{ object.image.url }}>
+            <span>{{ object.name }}</span>
+          </div>
+          <i class="uil uil-draggabledots"></i>
+        </li>
+        {% endfor %}
+      </ul>  
+
+      <button type="submit">
+        submit
+      </button>
+
+    </form>
 
   </body>
 </html>
