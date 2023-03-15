@@ -144,9 +144,13 @@
         <img src="{{ movie.image.url }}" alt="movie image" width="170px" height="250px">
     </div>
 
-    <form action="">
+    {% comment %} <form action="{% url 'movies:like_dislike_path' movie_slug movie_pk %}" method="post"> {% endcomment %}
+      
         <div class="wrapper">
+          <form action="{% url 'movies:like_dislike_path' movie_slug movie_pk %}" method="post">
+            {% csrf_token %}
             <div class="like">
+                <input type="hidden" name="rate" value="like">
                 <button type="submit" style="color: transparent; background-color: transparent; border-color: transparent; cursor: default;">
                   <i onclick="javascript: submit()" class="fas fa-heart icon">
                   </i>
@@ -154,14 +158,19 @@
                 </button>
                 <h2>0</h2>
             </div>
+          </form>
+          <form action="{% url 'movies:like_dislike_path' movie_slug movie_pk %}" method="post">
+            {% csrf_token %}
             <div class="dislike">
+              <input type="hidden" name="rate" value="dislike">
               <button type="submit" style="color: transparent; background-color: transparent; border-color: transparent; cursor: default;">
                 <i onclick="count1()" class="fas fa-heart-broken icon"></i>
               </button>
                 <h2>122</h2>
             </div>
+          </form>  
         </div>
-    </form>
+    {% comment %} </form> {% endcomment %}
 
 </div>
 <br>

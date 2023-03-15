@@ -4,7 +4,7 @@ from django.views.generic import DetailView, View
 from django.http import Http404
 
 # This app
-from .models import Movie
+from .models import Movie, MovieLike, MovieDislike
 
 class MovieView(DetailView):
     model=Movie
@@ -28,8 +28,10 @@ class MovieView(DetailView):
             "cast": self.get_object().casts.all().order_by("cast__order")[:5],
             "companies": self.get_object().producer_companies.all(),
             "cast_len": len(self.get_object().casts.all().order_by("cast__order")),
+            "movie_pk": self.kwargs.get("pk"),
+            "movie_slug": self.kwargs.get("slug"),
         }
-
+        
         return context
     
 class DragMovieStaffView(View):
@@ -82,3 +84,16 @@ class DragMovieStaffView(View):
             iterator += 1
 
         return redirect(to="movies:drag_movie_staff_path", slug=self.kwargs.get("slug"), pk=self.kwargs.get("pk"), job=self.kwargs.get("job") )
+
+class LikeDislikeView(View):
+    def post(self, request, *args, **kwargs):
+        print(request.POST)
+
+
+        
+        # option = {
+        #     1: request.POST.get
+        #     2:
+        # }
+
+        return redirect(to="movies:movie_path", slug=self.kwargs.get("slug"), pk=self.kwargs.get("pk"))
