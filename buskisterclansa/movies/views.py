@@ -40,12 +40,20 @@ class MovieView(DetailView):
     
 class DragMovieStaffView(View):
 
+    def dispatch(self, request, *args, **kwargs):
+        self.movie = get_object_or_404(klass=Movie, pk=kwargs.get("pk"), slug=kwargs.get("slug"))
+        if request.user.is_authenticated:
+            if request.user.is_admin:
+                return super().dispatch(request, *args, **kwargs)
+
+        raise Http404
+
     def get(self, request, pk, slug):
-        movie = get_object_or_404(klass=Movie, pk=pk, slug=slug)
 
         return render(
             request=request,
             template_name="movies/drag_movie_staff.html",
             context={
+                "cast": self.movie.casts.all().order_by("cast__order"), 
             }
         )
