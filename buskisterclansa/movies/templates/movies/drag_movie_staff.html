@@ -14,11 +14,11 @@
   <body>
     <ul class="sortable-list">
 
-      {% for actor in cast %}
+      {% for object in objects %}
       <li class="item" draggable="true">
         <div class="details">
-          <img src={{ actor.image.url }}>
-          <span>{{ actor.name }}</span>
+          <img src={{ object.image.url }}>
+          <span>{{ object.name }}</span>
         </div>
         <i class="uil uil-draggabledots"></i>
       </li>

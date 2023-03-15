@@ -50,10 +50,25 @@ class DragMovieStaffView(View):
 
     def get(self, request, pk, slug):
 
+        if not request.GET.get("job"):
+            raise Http404
+
+        def get_relation_staff():
+            return {
+                "created_by": self.movie.created_by.all().order_by("createdby__order"),
+                "cast": self.movie.casts.all().order_by("cast__order"),
+                "director": self.movie.directors.all().order_by("director__order"),
+                "producer": self.movie.producers.all().order_by("producer__order"),
+                "script": self.movie.scripts.all().order_by("script__order"),
+            }
+
+        if not get_relation_staff().get(request.GET.get("job")):
+            raise Http404
+
         return render(
             request=request,
             template_name="movies/drag_movie_staff.html",
             context={
-                "cast": self.movie.casts.all().order_by("cast__order"), 
+                "objects": get_relation_staff()[request.GET.get("job")], 
             }
         )
