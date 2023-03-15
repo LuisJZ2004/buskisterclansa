@@ -1,6 +1,6 @@
 # Django
 from django.shortcuts import render, get_object_or_404
-from django.views.generic import DetailView
+from django.views.generic import DetailView, View
 from django.http import Http404
 
 # This app
@@ -37,3 +37,15 @@ class MovieView(DetailView):
         }
 
         return context
+    
+class DragMovieStaffView(View):
+
+    def get(self, request, pk, slug):
+        movie = get_object_or_404(klass=Movie, pk=pk, slug=slug)
+
+        return render(
+            request=request,
+            template_name="movies/drag_movie_staff.html",
+            context={
+            }
+        )
