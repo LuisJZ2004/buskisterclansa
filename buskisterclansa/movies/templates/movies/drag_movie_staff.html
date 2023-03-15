@@ -13,15 +13,16 @@
   </head>
   <body>
 
-    <form action="{% url 'movies:drag_movie_staff_path' slug pk %}?job={{job}}" method="PUT">
+    <form action="{% url 'movies:drag_movie_staff_path' slug pk job %}" method="post">
       {% csrf_token %}
       <ul class="sortable-list">
 
         {% for object in objects %}
         <li class="item" draggable="true">
+          <input type="hidden" name="person{{forloop.counter}}" value="{{ object.pk }}">
           <div class="details">
-            <img src={{ object.image.url }}>
-            <span>{{ object.name }}</span>
+            <img src={{ object.movie_staff.image.url }}>
+            <span>{{ object.movie_staff.name }}</span>
           </div>
           <i class="uil uil-draggabledots"></i>
         </li>

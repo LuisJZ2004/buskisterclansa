@@ -1,5 +1,5 @@
 # Django
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import DetailView, View
 from django.http import Http404
 
@@ -10,12 +10,6 @@ class MovieView(DetailView):
     model=Movie
     template_name="movies/movie.html"
     context_object_name = "movie"
-
-    def dispatch(self, request, *args, **kwargs):
-        if request.GET.get("part"):
-            return super().dispatch(request, *args, **kwargs)
-        
-        raise Http404
 
     def get_queryset(self):
         return self.model.objects.all()
@@ -48,33 +42,43 @@ class DragMovieStaffView(View):
 
         raise Http404
 
-    def get(self, request, *args, **kwargs):
-
-        if not request.GET.get("job"):
-            raise Http404
-
-        def get_relation_staff():
-            return {
-                "created_by": self.movie.created_by.all().order_by("createdby__order"),
-                "cast": self.movie.casts.all().order_by("cast__order"),
-                "director": self.movie.directors.all().order_by("director__order"),
-                "producer": self.movie.producers.all().order_by("producer__order"),
-                "script": self.movie.scripts.all().order_by("script__order"),
+    def __get_relation_staff(self):
+        return {
+                "created_by": self.movie.createdby_set.all().order_by("order"),
+                "cast": self.movie.cast_set.all().order_by("order"),
+                "director": self.movie.director_set.all().order_by("order"),
+                "producer": self.movie.producer_set.all().order_by("order"),
+                "script": self.movie.script_set.all().order_by("order"),
             }
 
-        if not get_relation_staff().get(request.GET.get("job")):
+    def get(self, request, *args, **kwargs):
+        
+        if not self.__get_relation_staff().get(self.kwargs.get("job")):
             raise Http404
 
         return render(
             request=request,
             template_name="movies/drag_movie_staff.html",
             context={
-                "objects": get_relation_staff()[request.GET.get("job")], 
-                "job": request.GET.get("job"),
+                "objects": self.__get_relation_staff()[self.kwargs.get("job")], 
+                "job": self.kwargs.get("job"),
                 "pk": self.kwargs.get("pk"),
                 "slug": self.kwargs.get("slug"),
             }
         )
     
-    def put(self, request, *args, **kwargs):
-        pass
+    def post(self, request, *args, **kwargs):
+        staff = self.__get_relation_staff().get(self.kwargs.get("job"))
+        if not staff:
+            raise Http404
+        request_post = dict(request.POST)
+        request_post.pop("csrfmiddlewaretoken")
+
+        iterator = 0
+        for person_id in request_post.values():
+            person = staff.get(id=person_id[0])
+            person.order = iterator
+            person.save()
+            iterator += 1
+
+        return redirect(to="movies:drag_movie_staff_path", slug=self.kwargs.get("slug"), pk=self.kwargs.get("pk"), job=self.kwargs.get("job") )
