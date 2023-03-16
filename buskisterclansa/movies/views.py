@@ -2,6 +2,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import DetailView, View
 from django.http import Http404
+from django.core.exceptions import ObjectDoesNotExist
 
 # This app
 from .models import Movie, MovieLike, MovieDislike
@@ -30,6 +31,12 @@ class MovieView(DetailView):
             "cast_len": len(self.get_object().casts.all().order_by("cast__order")),
             "movie_pk": self.kwargs.get("pk"),
             "movie_slug": self.kwargs.get("slug"),
+
+            "has_like": self.get_object().given_like(user_id=self.request.user.pk) if self.request.user.is_authenticated else None,
+            "has_dislike": self.get_object().given_dislike(user_id=self.request.user.pk) if self.request.user.is_authenticated else None,
+
+            "like_count": len(self.get_object().movielike_set.all()),
+            "dislike_count": len(self.get_object().moviedislike_set.all()),
         }
         
         return context
@@ -87,13 +94,30 @@ class DragMovieStaffView(View):
 
 class LikeDislikeView(View):
     def post(self, request, *args, **kwargs):
-        print(request.POST)
-
-
+        movie = get_object_or_404(klass=Movie, slug=self.kwargs.get("slug"), pk=self.kwargs.get("pk"))
         
-        # option = {
-        #     1: request.POST.get
-        #     2:
-        # }
+        
+        if request.POST.get("rate") == "like":
+            try:
+                like = movie.movielike_set.get(user__pk=request.user.pk)
+                like.delete()
+            except ObjectDoesNotExist:
+                try:
+                    dislike = movie.moviedislike_set.get(user__pk=request.user.pk)
+                    dislike.delete()
+                except ObjectDoesNotExist:
+                    pass
+                movie.movielike_set.create(user=request.user)
+        elif request.POST.get("rate") == "dislike":
+            try:
+                dislike = movie.moviedislike_set.get(user__pk=request.user.pk)
+                dislike.delete()
+            except ObjectDoesNotExist:
+                try:
+                    like = movie.movielike_set.get(user__pk=request.user.pk)
+                    like.delete()
+                except ObjectDoesNotExist:
+                    pass
+                movie.moviedislike_set.create(user=request.user)
 
         return redirect(to="movies:movie_path", slug=self.kwargs.get("slug"), pk=self.kwargs.get("pk"))

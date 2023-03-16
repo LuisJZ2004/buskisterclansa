@@ -152,11 +152,16 @@
             <div class="like">
                 <input type="hidden" name="rate" value="like">
                 <button type="submit" style="color: transparent; background-color: transparent; border-color: transparent; cursor: default;">
-                  <i onclick="javascript: submit()" class="fas fa-heart icon">
+                  
+                  {% if has_like %}
+                  <i class="fas fa-heart icon" style="color: black">
                   </i>
-
+                  {% else %}
+                  <i class="fas fa-heart icon">
+                  </i>
+                  {% endif %}
                 </button>
-                <h2>0</h2>
+                <h2>{{ like_count }}</h2>
             </div>
           </form>
           <form action="{% url 'movies:like_dislike_path' movie_slug movie_pk %}" method="post">
@@ -164,9 +169,14 @@
             <div class="dislike">
               <input type="hidden" name="rate" value="dislike">
               <button type="submit" style="color: transparent; background-color: transparent; border-color: transparent; cursor: default;">
-                <i onclick="count1()" class="fas fa-heart-broken icon"></i>
+                
+                {% if has_dislike %}
+                <i class="fas fa-heart-broken icon" style="color: black"></i>
+                {% else %}
+                <i class="fas fa-heart-broken icon"></i>
+                {% endif %}
               </button>
-                <h2>122</h2>
+                <h2>{{ dislike_count }}</h2>
             </div>
           </form>  
         </div>

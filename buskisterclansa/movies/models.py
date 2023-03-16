@@ -2,6 +2,7 @@
 from django.db import models
 from django.utils import timezone
 from django.utils.text import slugify
+from django.core.exceptions import ObjectDoesNotExist
 
 # My apps
 from accounts.models import CustomUser
@@ -35,6 +36,24 @@ class Movie(models.Model):
         self.slug = slugify(self.name)
 
         return super().save(*args, **kwargs)
+    
+    def given_like(self, user_id: int):
+        user = CustomUser.objects.get(pk=user_id)
+
+        try:
+            user.movielike_set.get(movie__pk=self.pk)
+            return True
+        except ObjectDoesNotExist:
+            return False
+        
+    def given_dislike(self, user_id: int):
+        user = CustomUser.objects.get(pk=user_id)
+
+        try:
+            user.moviedislike_set.get(movie__pk=self.pk)
+            return True
+        except ObjectDoesNotExist:
+            return False
 
 class Trailer(models.Model):
     movie = models.ForeignKey(to=Movie, on_delete=models.CASCADE)
