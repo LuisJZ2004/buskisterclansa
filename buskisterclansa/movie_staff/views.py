@@ -8,6 +8,7 @@ from .models import MovieStaff
 class MovieStaffView(DetailView):
     model = MovieStaff
     context_object_name = "staff"
+    template_name = "movie_staff/movie_staff.html"
 
     def get_queryset(self):
         return self.model.objects.all()
