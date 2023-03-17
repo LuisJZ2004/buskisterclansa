@@ -1,23 +1,56 @@
 {% extends 'movies/movie_layout.html' %}
 {% load static %}
 
+{% block my_style %}
+<link rel="stylesheet" href="{% static 'movies/css/reviews.css' %}">
+{% endblock my_style %}
+
 {% block movie_content %}
 
 <div class="center">
     
-    <div class="movie-info"> 
-        <div class="movie-image">
-            <img src="{{movie.image.url}}" alt="" width="180px" height="260px">
-        </div>
-        <div class="movie-synopsis">
-            <p>
-                {{ movie.synopsis }}
-            </p>
-        </div>
+    <div class="movie-image">
+        <img src="{{movie.image.url}}" alt="" width="180px" height="260px">
     </div>
 
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+
+        var data = google.visualization.arrayToDataTable([
+          ['Task', 'Hours per Day'],
+          ['Work',     11],
+          ['Eat',      2],
+          ['Commute',  2],
+          ['Watch TV', 2],
+          ['Sleep',    7]
+        ]);
+
+        var options = {
+          title: 'My Daily Activities'
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+        chart.draw(data, options);
+      }
+    </script>
     <div id="piechart" style="border:1px solid black; width: 330px; height: 290px;"></div>
 
 </div>
-
+<br>
+<br>
+<hr>
+<div class="movie-synopsis">
+    <p>
+        {{ movie.synopsis }}
+    </p>
+</div>
+<br>
+<hr>
+<br>
+<br>
 {% endblock movie_content %}

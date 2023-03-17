@@ -1,0 +1,24 @@
+.center {
+    margin-top: 15px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+}
+.center .movie-image {
+    border: 2px solid black;
+    width: 184px;
+    height: 263px;
+}
+
+.movie-synopsis {
+    margin-top: 10px;
+    max-width: 800px;
+    display: flex;
+    align-self: center;
+}
+.movie-synopsis p {
+    margin-left: 10px;
+    font-size: 2.1rem;
+    font-family: 'Times New Roman', Times, serif;
+}
