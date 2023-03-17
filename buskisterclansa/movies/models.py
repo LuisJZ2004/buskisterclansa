@@ -128,6 +128,7 @@ class Review(models.Model):
     name = models.CharField(max_length=70, null=False, blank=False)
     slug = models.SlugField(max_length=70, null=False, blank=False, editable=False)
     content = models.TextField(max_length=2600, null=False, blank=False)
+    pub_date = models.DateTimeField(default=timezone.now(), null=False, blank=False)
 
     rate_by_stars = models.IntegerField(choices=((1,1,),(2,2,),(3,3,),(4,4,),(5,5,),), null=False, blank=False)
 

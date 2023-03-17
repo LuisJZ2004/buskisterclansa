@@ -138,3 +138,18 @@ class MovieReviewView(ListView):
             self.context_object_name: self.get_queryset(),
             "movie": self.movie,
         }
+    
+class AddReviewView(View):
+
+    def dispatch(self, request, *args, **kwargs):
+        self.movie = get_object_or_404(klass=Movie, slug=self.kwargs.get("slug"), pk=self.kwargs.get("pk"))
+        return super().dispatch(request, *args, **kwargs)
+    
+    def get(self, request, *args, **kwargs):
+        return render(
+            request=request,
+            template_name="movies/add_review.html",
+            context= {
+                "movie_name": self.movie.name,
+            }
+        )
