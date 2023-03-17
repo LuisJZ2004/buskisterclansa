@@ -74,3 +74,42 @@ main .main-container .name-and-stars .stars input:hover ~ label
 main .main-container .name-and-stars .stars input:hover ~ label {
     transform: scale(1.2)rotate(-30deg);
 }
+/* end stars */
+
+/* content */
+main .main-container .content {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+main .main-container .content textarea{
+    width: 600px;
+    border-radius: 10px;
+    border: 2px solid black;
+}
+
+main .main-container .buttom-bottons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+main .main-container .buttom-bottons .wastebasket{
+    width: 35px;
+    height: 35px;
+    margin-right: 20px;
+    font-size: 1.7rem;
+}
+
+main .main-container .buttom-bottons .submit {
+    margin: 15px;
+    margin-left: 20px;
+    height: 30px;
+    width: 60px;
+    border-radius: 5px;
+    color: black;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    background-color: rgb(228, 228, 228);
+}

@@ -153,3 +153,6 @@ class AddReviewView(View):
                 "movie_name": self.movie.name,
             }
         )
+    
+    def post(self, request, *args, **kwargs):
+        pass
