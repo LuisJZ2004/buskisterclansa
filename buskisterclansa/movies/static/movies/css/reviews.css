@@ -22,3 +22,27 @@
     font-size: 2.1rem;
     font-family: 'Times New Roman', Times, serif;
 }
+
+.user-review .icons-and-pages{
+    padding: 13px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+.user-review .icons-and-pages .make-review {
+    max-width: 55px;
+}
+.user-review .icons-and-pages .make-review a h2 {
+    font-size: 3.8rem;
+}
+.user-review .icons-and-pages .pages {
+    max-width: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;   
+}
+.user-review .icons-and-pages .pages button {
+    width: 25px;
+    margin-left: 5px;
+    border-radius: 13px;
+}
