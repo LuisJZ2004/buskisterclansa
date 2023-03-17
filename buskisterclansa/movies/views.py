@@ -124,6 +124,7 @@ class LikeDislikeView(View):
     
 class MovieReviewView(ListView):
     template_name = "movies/reviews.html"
+    context_object_name = "reviews"
 
     def dispatch(self, request, *args, **kwargs):
         self.movie = get_object_or_404(klass=Movie, slug=self.kwargs.get("slug"), pk=self.kwargs.get("pk"))
@@ -131,3 +132,9 @@ class MovieReviewView(ListView):
 
     def get_queryset(self):
         return self.movie.review_set.all()
+
+    def get_context_data(self, **kwargs):
+        return {
+            self.context_object_name: self.get_queryset(),
+            "movie": self.movie,
+        }
