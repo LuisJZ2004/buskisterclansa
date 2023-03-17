@@ -119,3 +119,36 @@ class MovieDislike(models.Model):
 
     def __str__(self) -> str:
         return f"{self.user.username} dislikes '{self.movie.name}'"
+
+# Reviews    
+class Review(models.Model):
+    movie = models.ForeignKey(to=Movie, on_delete=models.CASCADE)
+    user = models.ForeignKey(to=CustomUser, on_delete=models.PROTECT)
+
+    name = models.CharField(max_length=70, null=False, blank=False)
+    slug = models.SlugField(max_length=70, null=False, blank=False, editable=False)
+    content = models.TextField(max_length=2600, null=False, blank=False)
+
+    rate_by_stars = models.IntegerField(choices=((1,1,),(2,2,),(3,3,),(4,4,),(5,5,),), null=False, blank=False)
+
+    def __str__(self) -> str:
+        return self.name
+    
+    def save(self, *args, **kwargs) -> None:
+        self.slug = slugify(self.name)
+
+        return super().save(*args, **kwargs)
+    
+class ReviewLike(models.Model):
+    review = models.ForeignKey(to=Review, on_delete=models.CASCADE)
+    user = models.ForeignKey(to=CustomUser, on_delete=models.CASCADE)
+
+    def __str__(self) -> str:
+        return f"{self.user.username} likes '{self.review.name}'"
+    
+class ReviewDislike(models.Model):
+    review = models.ForeignKey(to=Review, on_delete=models.CASCADE)
+    user = models.ForeignKey(to=CustomUser, on_delete=models.CASCADE)
+
+    def __str__(self) -> str:
+        return f"{self.user.username} dislikes '{self.review.name}'"

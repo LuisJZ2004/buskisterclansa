@@ -1,6 +1,6 @@
 # Django
 from django.shortcuts import render, redirect, get_object_or_404
-from django.views.generic import DetailView, View
+from django.views.generic import DetailView, ListView, View
 from django.http import Http404
 from django.core.exceptions import ObjectDoesNotExist
 
@@ -121,3 +121,6 @@ class LikeDislikeView(View):
                 movie.moviedislike_set.create(user=request.user)
 
         return redirect(to="movies:movie_path", slug=self.kwargs.get("slug"), pk=self.kwargs.get("pk"))
+    
+class MovieReviewView(ListView):
+    pass
