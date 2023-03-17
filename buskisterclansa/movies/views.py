@@ -5,7 +5,7 @@ from django.http import Http404
 from django.core.exceptions import ObjectDoesNotExist
 
 # This app
-from .models import Movie, MovieLike, MovieDislike
+from .models import Movie, MovieLike, MovieDislike, Review
 
 class MovieView(DetailView):
     model=Movie
@@ -123,4 +123,11 @@ class LikeDislikeView(View):
         return redirect(to="movies:movie_path", slug=self.kwargs.get("slug"), pk=self.kwargs.get("pk"))
     
 class MovieReviewView(ListView):
-    pass
+    template_name = "movies/reviews.html"
+
+    def dispatch(self, request, *args, **kwargs):
+        self.movie = get_object_or_404(klass=Movie, slug=self.kwargs.get("slug"), pk=self.kwargs.get("pk"))
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_queryset(self):
+        return self.movie.review_set.all()
