@@ -55,15 +55,13 @@
         align-items: center
       }
 
-      .general-info .synopsis {
-        margin-top: 20px;
-        margin-left: 15px;
-        width: 750px;
+      .movie-center .synopsis {
+        width: 500px;
         text-align: left;
       }
 
-      .general-info .synopsis p {
-        font-size: 1.9rem;
+      .movie-center .synopsis p {
+        font-size: 2.0rem;
         font-family: 'Times New Roman', Times, serif;
       }
 
@@ -143,10 +141,15 @@
     <div class="image-container">
         <img src="{{ movie.image.url }}" alt="movie image" width="170px" height="250px">
     </div>
+    <div class="synopsis">
+      <p>
+        {{ movie.synopsis }}
+      </p>
+    </div>
 
     {% comment %} <form action="{% url 'movies:like_dislike_path' movie_slug movie_pk %}" method="post"> {% endcomment %}
       
-        <div class="wrapper">
+        {% comment %} <div class="wrapper">
           <form action="{% url 'movies:like_dislike_path' movie_slug movie_pk %}" method="post">
             {% csrf_token %}
             <div class="like">
@@ -179,20 +182,13 @@
                 <h2>{{ dislike_count }}</h2>
             </div>
           </form>  
-        </div>
+        </div> {% endcomment %}
     {% comment %} </form> {% endcomment %}
 
 </div>
-<br>
-<br>
-<hr>
 <div class="general-info">
   
-  <div class="synopsis">
-    <p>
-      {{ movie.synopsis }}
-    </p>
-  </div>
+  
   <br>
   <br>
   <hr>
