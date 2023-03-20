@@ -36,11 +36,7 @@ class MovieView(DetailView):
             "movie_pk": self.kwargs.get("pk"),
             "movie_slug": self.kwargs.get("slug"),
 
-            "has_like": self.get_object().given_like(user_id=self.request.user.pk) if self.request.user.is_authenticated else None,
-            "has_dislike": self.get_object().given_dislike(user_id=self.request.user.pk) if self.request.user.is_authenticated else None,
-
-            "like_count": len(self.get_object().movielike_set.all()),
-            "dislike_count": len(self.get_object().moviedislike_set.all()),
+            "reviews": self.get_object().review_set.all().order_by("-pub_date")[:5]
         }
         
         return context

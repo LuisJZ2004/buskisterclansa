@@ -306,22 +306,22 @@
 
           var data = google.visualization.arrayToDataTable([
             ['', '',],
-            ['New York City, NY', 8],
-            ['Los Angeles, CA', "{{movie_pk}}"],
-            ['Chicago, IL', 2],
-            ['Houston, TX', 4],
-            ['Philadelphia, PA', 5]
+            ['1 stars', 8],
+            ['2 stars', "{{movie_pk}}"],
+            ['3 stars', 2],
+            ['4 stars', 4],
+            ['5 stars', 5]
           ]);
 
           var options = {
-            title: 'stars',
+            title: 'rating',
             chartArea: {width: '50%'},
             hAxis: {
               title: 'Total Population',
               minValue: 0
             },
             vAxis: {
-              title: 'City'
+              title: 'rating'
             }
           };
 
@@ -343,6 +343,16 @@
       <h1>Write a review</h1>
     </a>
   </div>
+
+  <div class="reviews">
+    {% for review in reviews %}
+    <div class="review">
+        <a href="">{{review.user.username}}</a>
+        <a href="">{{review.name}}</a>
+        
+    </div>
+    {% endfor %}
+</div>
 
 </div>
 
