@@ -6,6 +6,7 @@ from django.core.exceptions import ObjectDoesNotExist
 
 # This app
 from .models import Movie, MovieLike, MovieDislike, Review
+from .forms import ReviewForm
 
 class MovieView(DetailView):
     model=Movie
@@ -151,8 +152,31 @@ class AddReviewView(View):
             template_name="movies/add_review.html",
             context= {
                 "movie_name": self.movie.name,
+                "movie_slug": self.kwargs.get("slug"),
+                "movie_pk": self.kwargs.get("pk"),
             }
         )
     
     def post(self, request, *args, **kwargs):
-        pass
+        form = ReviewForm(request.POST)
+
+        if form.is_valid():
+            self.movie.review_set.create(
+                user=request.user,
+                name=request.POST["name"],
+                content=request.POST["content"],
+                rate_by_stars=request.POST["rate_by_stars"],
+            )
+            return redirect(to="movies:movie_path", slug=self.kwargs.get("slug"), pk=self.kwargs.get("pk"))
+        else:
+            print(dict(form.errors))
+            return render(
+                request=request,
+                template_name="movies/add_review.html",
+                context= {
+                    "movie_name": self.movie.name,
+                    "movie_slug": self.kwargs.get("slug"),
+                    "movie_pk": self.kwargs.get("pk"),
+                    "errors": dict(form.errors),
+                }
+            )
