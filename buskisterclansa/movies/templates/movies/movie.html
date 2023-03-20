@@ -287,31 +287,39 @@
   </div>
 
   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">
-      google.charts.load('current', {'packages':['corechart']});
-      google.charts.setOnLoadCallback(drawChart);
+  <script type="text/javascript">
+    google.charts.load('current', {packages: ['corechart', 'bar']});
+    google.charts.setOnLoadCallback(drawBasic);
 
-      function drawChart() {
+    function drawBasic() {
 
-        var data = google.visualization.arrayToDataTable([
-          ['Task', 'Hours per Day'],
-          ['Work',     11],
-          ['Eat',      2],
-          ['Commute',  2],
-          ['Watch TV', 2],
-          ['Sleep',    7]
-        ]);
+          var data = google.visualization.arrayToDataTable([
+            ['', '',],
+            ['New York City, NY', 8],
+            ['Los Angeles, CA', "{{movie_pk}}"],
+            ['Chicago, IL', 2],
+            ['Houston, TX', 4],
+            ['Philadelphia, PA', 5]
+          ]);
 
-        var options = {
-          title: 'My Daily Activities'
-        };
+          var options = {
+            title: 'stars',
+            chartArea: {width: '50%'},
+            hAxis: {
+              title: 'Total Population',
+              minValue: 0
+            },
+            vAxis: {
+              title: 'City'
+            }
+          };
 
-        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+          var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
 
-        chart.draw(data, options);
+          chart.draw(data, options);
       }
     </script>
-    <div id="piechart" style="border:1px solid black; width: 330px; height: 290px;"></div>
+    <div id="chart_div" style="border:1px solid black; width: 330px; height: 290px;"></div>
 
 </div>
 
