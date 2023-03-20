@@ -92,14 +92,15 @@
 
             <div class="buttom-bottons">
                 <input class="submit" type="submit" value="submit">
-                <form action="" method="post">
-                    <button class="wastebasket" type="submit" value="1" >
-                        🗑️
-                    </button>
-                </form>
+                
             </div>
         </form>
-
+        <form action="{% url 'movies:delete_review_path' movie_slug movie_pk %}" method="post">
+            {% csrf_token %}
+            <button class="wastebasket" type="submit" >
+                🗑️
+            </button>
+        </form>
     </div>
 </main>
 {% endblock content %}

@@ -30,7 +30,7 @@ class MovieView(DetailView):
             "created_by": self.get_object().created_by.all().order_by("createdby__order"),
             "script": self.get_object().scripts.all().order_by("script__order"),
             "producers": self.get_object().producers.all().order_by("producer__order"),
-            "cast": self.get_object().casts.all().order_by("cast__order")[:5],
+            "cast": self.get_object().casts.all().order_by("cast__order")[:3],
             "companies": self.get_object().producer_companies.all(),
             "cast_len": len(self.get_object().casts.all().order_by("cast__order")),
             "movie_pk": self.kwargs.get("pk"),
@@ -181,7 +181,6 @@ class AddReviewView(View):
                 )
             return redirect(to="movies:movie_path", slug=self.kwargs.get("slug"), pk=self.kwargs.get("pk"))
         else:
-            print(dict(form.errors))
             return render(
                 request=request,
                 template_name="movies/add_review.html",
@@ -193,3 +192,13 @@ class AddReviewView(View):
                     "errors": dict(form.errors),
                 }
             )
+        
+class DeleteReviewView(View):
+    def post(self, request, *args, **kwargs):
+        self.movie = get_object_or_404(klass=Movie, slug=self.kwargs.get("slug"), pk=self.kwargs.get("pk"))
+        self.comment = get_dependant_object_if_it_exist(self.movie.review_set, request.user.pk, "user__pk")
+
+        if self.comment: 
+            self.comment.delete()
+        
+        return redirect(to="movies:movie_path", slug=self.kwargs.get("slug"), pk=self.kwargs.get("pk"))

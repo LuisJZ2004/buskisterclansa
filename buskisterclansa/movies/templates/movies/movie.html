@@ -282,7 +282,18 @@
     <br>
     <br>
 
-    <a class="view-more" href="">View more</a>
+    <span>
+      <h4>Starring</h4>
+
+      {% for actor in cast %}
+      <a href="">{{actor.name}},</a>
+      {% endfor %}
+    </span>
+
+    <br>
+    <br>
+
+    <a class="view-more" href="">View more...</a>
 
   </div>
 

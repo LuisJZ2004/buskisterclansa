@@ -99,10 +99,10 @@ main .main-container .buttom-bottons {
     align-items: center;
 }
 
-main .main-container .buttom-bottons .wastebasket{
+main .main-container .wastebasket{
     width: 35px;
     height: 35px;
-    margin-right: 20px;
+    margin-left: 800px;
     font-size: 1.7rem;
 }
 
