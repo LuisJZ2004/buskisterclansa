@@ -4,6 +4,9 @@ from django.views.generic import DetailView, ListView, View
 from django.http import Http404
 from django.core.exceptions import ObjectDoesNotExist
 
+# My apps
+from extra_logic.movies.functions import get_dependant_object_if_it_exist
+
 # This app
 from .models import Movie, MovieLike, MovieDislike, Review
 from .forms import ReviewForm
@@ -144,9 +147,11 @@ class AddReviewView(View):
 
     def dispatch(self, request, *args, **kwargs):
         self.movie = get_object_or_404(klass=Movie, slug=self.kwargs.get("slug"), pk=self.kwargs.get("pk"))
+        self.comment = get_dependant_object_if_it_exist(self.movie.review_set, request.user.pk, "user__pk")
         return super().dispatch(request, *args, **kwargs)
     
     def get(self, request, *args, **kwargs):
+        print(get_dependant_object_if_it_exist(self.movie.review_set, request.user.pk, "user__pk"))
         return render(
             request=request,
             template_name="movies/add_review.html",
@@ -154,6 +159,7 @@ class AddReviewView(View):
                 "movie_name": self.movie.name,
                 "movie_slug": self.kwargs.get("slug"),
                 "movie_pk": self.kwargs.get("pk"),
+                "comment": self.comment,
             }
         )
     
@@ -161,12 +167,18 @@ class AddReviewView(View):
         form = ReviewForm(request.POST)
 
         if form.is_valid():
-            self.movie.review_set.create(
-                user=request.user,
-                name=request.POST["name"],
-                content=request.POST["content"],
-                rate_by_stars=request.POST["rate_by_stars"],
-            )
+            if self.comment:
+                self.comment.name=request.POST["name"]
+                self.comment.content=request.POST["content"]
+                self.comment.rate_by_stars=request.POST["rate_by_stars"]
+                self.comment.save()
+            else:
+                self.movie.review_set.create(
+                    user=request.user,
+                    name=request.POST["name"],
+                    content=request.POST["content"],
+                    rate_by_stars=request.POST["rate_by_stars"],
+                )
             return redirect(to="movies:movie_path", slug=self.kwargs.get("slug"), pk=self.kwargs.get("pk"))
         else:
             print(dict(form.errors))
@@ -177,6 +189,7 @@ class AddReviewView(View):
                     "movie_name": self.movie.name,
                     "movie_slug": self.kwargs.get("slug"),
                     "movie_pk": self.kwargs.get("pk"),
+                    "comment": self.comment,
                     "errors": dict(form.errors),
                 }
             )

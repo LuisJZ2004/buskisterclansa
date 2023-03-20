@@ -3,14 +3,14 @@
 
 {% block styles %}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
-<link rel="stylesheet" href="{% static 'movies/css/add_review_1.css' %}">
+<link rel="stylesheet" href="{% static 'movies/css/add_review_2.css' %}">
 {% endblock styles %}
 
 {% block content %}
 <main>
     <div class="main-container">
         
-        <h2 class="title">{{ movie_name }}</h2>
+        <h2 class="title" style="text-align: center">Your review of '{{ movie_name }}'</h2>
 
         <form action="{% url 'movies:add_review_path' movie_slug movie_pk %}" method="post">
             {% csrf_token %}
@@ -19,7 +19,11 @@
                     {% if errors.name %}
                     <h3 class="error">{{ errors.name.0 }}</h3>
                     {% endif %}
-                    <input type="text" name="name">
+                    {% if comment %}
+                    <input type="text" name="name" placeholder="   title" value="{{comment.name}}">   
+                    {% else %}
+                    <input type="text" name="name" placeholder="   title">                 
+                    {% endif %}
                 </div>
                 <div class="stars-container">
                     {% if errors.rate_by_stars %}
@@ -27,23 +31,47 @@
                     {% endif %}
                     
                     <div class="stars" required>
+                        {% if comment.rate_by_stars == 5 %}
+                        <input type="radio" name="rate_by_stars" id="star-1" value="5" checked>
+                        {% else %}
                         <input type="radio" name="rate_by_stars" id="star-1" value="5">
+                        {% endif %}
                         <label for="star-1">
                             <i class="fa-solid fa-star"></i>
                         </label>
+
+                        {% if comment.rate_by_stars == 4 %}
+                        <input type="radio" name="rate_by_stars" id="star-2" value="4" checked>
+                        {% else %}
                         <input type="radio" name="rate_by_stars" id="star-2" value="4">
+                        {% endif %}
                         <label for="star-2">
                             <i class="fa-solid fa-star"></i>
                         </label>
+
+                        {% if comment.rate_by_stars == 3 %}
+                        <input type="radio" name="rate_by_stars" id="star-3" value="3" checked>
+                        {% else %}
                         <input type="radio" name="rate_by_stars" id="star-3" value="3">
+                        {% endif %}
                         <label for="star-3">
                             <i class="fa-solid fa-star"></i>
                         </label>
+
+                        {% if comment.rate_by_stars == 2 %}
+                        <input type="radio" name="rate_by_stars" id="star-4" value="2" checked>
+                        {% else %}
                         <input type="radio" name="rate_by_stars" id="star-4" value="2">
+                        {% endif %}
                         <label for="star-4">
                             <i class="fa-solid fa-star"></i>
                         </label>
+
+                        {% if comment.rate_by_stars == 1%}
+                        <input type="radio" name="rate_by_stars" id="star-5" value="1" checked>                        
+                        {% else %}
                         <input type="radio" name="rate_by_stars" id="star-5" value="1">
+                        {% endif %}
                         <label for="star-5">
                             <i class="fa-solid fa-star"></i>
                         </label>
@@ -55,8 +83,11 @@
                 {% if errors.content %}
                 <h3 class="error">{{ errors.content.0 }}</h3>
                 {% endif %}
-                <textarea name="content" id="" cols="30" rows="10" required>
-                </textarea>
+                {% if comment %}
+                <textarea name="content" id=""  styles="resize: none; outline: none;">{{comment.content}}</textarea>                
+                {% else %}
+                <textarea name="content" id="" styles="resize: none; outline: none;"></textarea>
+                {% endif %}
             </div>
 
             <div class="buttom-bottons">

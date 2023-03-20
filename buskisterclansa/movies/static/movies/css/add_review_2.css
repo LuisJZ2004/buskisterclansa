@@ -1,0 +1,118 @@
+main {
+    border: 2px solid white;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+}
+main .main-container {
+    border: 2px solid white;
+    min-width: 900px;
+    min-height: 900px;
+    background-color: #c7c7c7;
+}
+
+main .main-container .title {
+    padding: 10px;
+    font-size: 2.2rem;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+main .main-container .name-and-stars {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+main .main-container .name-and-stars .name-container {
+    padding: 10px;
+    width: 207px;
+    margin-left: 25px; 
+}
+
+main .main-container .name-and-stars .name-container input {
+    height: 27px;
+    border-radius: 8px;
+    width: 180px;
+}
+
+.error {
+    padding: 2px;
+    font-size: 1.6rem;
+    font-family: Arial, Helvetica, sans-serif;
+    color: red;
+}
+
+/* stars */
+main .main-container .name-and-stars .stars {
+    transform: rotateY(180deg);
+    margin-right: 25px; 
+    width: 160px;
+}
+
+main .main-container .name-and-stars .stars input {
+    display: none;
+}
+
+main .main-container .name-and-stars .stars label {
+    display: inline-block;
+    color: #444;
+    font-size: 22px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+main .main-container .name-and-stars .stars label:not(:last-child) {
+    margin-right: 5px;
+}
+
+main .main-container .name-and-stars .stars input:checked ~ label,
+main .main-container .name-and-stars .stars input:hover ~ label
+{
+    color: #ff7a00;
+}
+
+main .main-container .name-and-stars .stars input:hover ~ label {
+    transform: scale(1.2)rotate(-30deg);
+}
+/* end stars */
+
+/* content */
+main .main-container .content {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+main .main-container .content textarea{
+    width: 500px;
+    height: 200px;
+    border-radius: 10px;
+    border: 2px solid black;
+    outline: none;
+    line-height: 1.4;
+}
+
+main .main-container .buttom-bottons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+main .main-container .buttom-bottons .wastebasket{
+    width: 35px;
+    height: 35px;
+    margin-right: 20px;
+    font-size: 1.7rem;
+}
+
+main .main-container .buttom-bottons .submit {
+    margin: 15px;
+    margin-left: 20px;
+    height: 30px;
+    width: 60px;
+    border-radius: 5px;
+    color: black;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    background-color: rgb(228, 228, 228);
+}
