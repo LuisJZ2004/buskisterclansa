@@ -3,6 +3,7 @@
 
 {% block my_style %}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
 <style>
     main .main-container .title {
         {% comment %} border: 2px solid black; {% endcomment %}
@@ -99,10 +100,11 @@
       } 
 
       .reviews .write-review{
-        border: 1px solid black;
         padding: 10px;
         padding-left: 5px;
-        width: 160px;
+        max-width: 100vw;
+        display: flex;
+        justify-content: space-between;
       }
       .reviews a h1 {
         font-family: 'Arial';
@@ -112,53 +114,32 @@
       .reviews a h1:hover {
         color: #545454;
       }
-
-      .cast .actor img{
-        border-radius: 50px;
+      .reviews-container {
+        padding: 20px;
       }
-      .cast .actor {
-        border: 2px solid black;
-        width: 350px;
+      .reviews-container .review {
+        border: 1px solid black;
         margin-bottom: 10px;
+        padding: 5px;
         display: flex;
-        align-items: center
-      }
-
-      .cast{
-        border: 2px solid black;
-        padding: 30px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
+        flex-wrap: wrap;
+        justify-content: space-between;
         align-items: center;
       }
-      .cast .cast-title{
-        margin-bottom: 25px;
+      .reviews-container .review a {
+        font-family: 'Arial';
+        font-size: 1.9rem;
+        color: #00005a;
       }
-      .cast .cast-title h2 {
-        color: black;
-        font-family: Arial;
-        font-size: 3.0rem;
+      .reviews-container .review a:hover {
+        color: #0086bd;
       }
-      .cast .actor span{
-        margin-left: 20px;
+      .reviews-container .review div {
+        padding: 5px;
+        text-align: center;
+        width: 250px;
       }
-      .cast .actor span a {
-        font-size: 2.1rem;
-        font-family: Arial;
-        color: black;
-      }
-      .cast .actor span a:hover {
-        color: #747474;
-      }
-      .cast .view-more a h2{
-        font-size: 2.3rem;
-        font-family: monospace;
-        color: black;
-      }
-      .cast .view-more a h2:hover{
-        color: #747474;
-      }
+      
 </style>
 {% endblock my_style %}
 
@@ -339,20 +320,65 @@
 
 <div class="reviews">
   <div class="write-review">
-    <a href="">
+    <a href="{% url 'movies:add_review_path' movie_slug movie_pk %}">
       <h1>Write a review</h1>
+    </a>
+    <a href="">
+      <h1>See all reviews</h1>
     </a>
   </div>
 
-  <div class="reviews">
+  <div class="reviews-container">
     {% for review in reviews %}
     <div class="review">
+      <div class="username-container">
         <a href="">{{review.user.username}}</a>
+      </div>
+      <div class="review-name-container">
         <a href="">{{review.name}}</a>
+      </div>
+
+      <div class="rating-container" >
+        <label for="star-1" style="font-size:1.4rem">
+          {% if review.rate_by_stars >= 1  %}
+          <i class="fa-solid fa-star" style="color:#e59400;"></i>
+          {% else %}
+          <i class="fa-solid fa-star"></i>
+          {% endif %}
+        </label>
+        <label for="star-2" style="font-size:1.4rem">
+          {% if review.rate_by_stars >= 2  %}
+          <i class="fa-solid fa-star" style="color:#e59400;"></i>
+          {% else %}
+          <i class="fa-solid fa-star"></i>
+          {% endif %}
+        </label>
+        <label for="star-3" style="font-size:1.4rem">
+          {% if review.rate_by_stars >= 3  %}
+          <i class="fa-solid fa-star" style="color:#e59400;"></i>
+          {% else %}
+          <i class="fa-solid fa-star"></i>
+          {% endif %}
+        </label>
+        <label for="star-4" style="font-size:1.4rem">
+          {% if review.rate_by_stars >= 4  %}
+          <i class="fa-solid fa-star" style="color:#e59400;"></i>
+          {% else %}
+          <i class="fa-solid fa-star"></i>
+          {% endif %}
+        </label>
+        <label for="star-5" style="font-size:1.4rem">
+          {% if review.rate_by_stars >= 5  %}
+          <i class="fa-solid fa-star" style="color:#e59400;"></i>
+          {% else %}
+          <i class="fa-solid fa-star"></i>
+          {% endif %}
+        </label>
+      </div>
         
     </div>
     {% endfor %}
-</div>
+  </div>
 
 </div>
 

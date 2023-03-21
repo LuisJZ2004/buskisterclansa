@@ -125,8 +125,8 @@ class Review(models.Model):
     movie = models.ForeignKey(to=Movie, on_delete=models.CASCADE)
     user = models.ForeignKey(to=CustomUser, on_delete=models.PROTECT)
 
-    name = models.CharField(max_length=70, null=False, blank=False)
-    slug = models.SlugField(max_length=70, null=False, blank=False, editable=False)
+    name = models.CharField(max_length=18, null=False, blank=False)
+    slug = models.SlugField(max_length=18, null=False, blank=False, editable=False)
     content = models.TextField(max_length=2600, null=False, blank=False)
     pub_date = models.DateTimeField(default=timezone.now(), null=False, blank=False)
 

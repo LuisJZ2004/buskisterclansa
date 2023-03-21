@@ -36,6 +36,7 @@ class MovieView(DetailView):
             "movie_pk": self.kwargs.get("pk"),
             "movie_slug": self.kwargs.get("slug"),
 
+            "cut_username": self.request.user.username[:17],
             "reviews": self.get_object().review_set.all().order_by("-pub_date")[:5]
         }
         
@@ -147,7 +148,6 @@ class AddReviewView(View):
         return super().dispatch(request, *args, **kwargs)
     
     def get(self, request, *args, **kwargs):
-        print(get_dependant_object_if_it_exist(self.movie.review_set, request.user.pk, "user__pk"))
         return render(
             request=request,
             template_name="movies/add_review.html",
