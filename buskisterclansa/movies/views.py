@@ -36,8 +36,15 @@ class MovieView(DetailView):
             "movie_pk": self.kwargs.get("pk"),
             "movie_slug": self.kwargs.get("slug"),
 
-            "cut_username": self.request.user.username[:17],
-            "reviews": self.get_object().review_set.all().order_by("-pub_date")[:5]
+            "reviews": self.get_object().review_set.all().order_by("-pub_date")[:5],
+            "stars_rating": (
+                "",
+                len(self.get_object().review_set.filter(rate_by_stars=1)),
+                len(self.get_object().review_set.filter(rate_by_stars=2)),
+                len(self.get_object().review_set.filter(rate_by_stars=3)),
+                len(self.get_object().review_set.filter(rate_by_stars=4)),
+                len(self.get_object().review_set.filter(rate_by_stars=5)),
+            )
         }
         
         return context
