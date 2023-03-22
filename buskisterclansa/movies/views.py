@@ -130,7 +130,7 @@ class LikeDislikeView(View):
 
         return redirect(to="movies:movie_path", slug=self.kwargs.get("slug"), pk=self.kwargs.get("pk"))
     
-class MovieReviewView(ListView):
+class MovieReviewsListView(ListView):
     template_name = "movies/reviews.html"
     context_object_name = "reviews"
 
@@ -143,8 +143,16 @@ class MovieReviewView(ListView):
 
     def get_context_data(self, **kwargs):
         return {
-            self.context_object_name: self.get_queryset(),
+            self.context_object_name: self.get_queryset().order_by("-pub_date"),
             "movie": self.movie,
+            "stars_rating": (
+                "",
+                len(self.movie.review_set.filter(rate_by_stars=1)),
+                len(self.movie.review_set.filter(rate_by_stars=2)),
+                len(self.movie.review_set.filter(rate_by_stars=3)),
+                len(self.movie.review_set.filter(rate_by_stars=4)),
+                len(self.movie.review_set.filter(rate_by_stars=5)),
+            ),
         }
     
 class AddReviewView(View):

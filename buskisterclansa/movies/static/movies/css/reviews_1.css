@@ -5,10 +5,12 @@
     justify-content: space-around;
     align-items: center;
 }
-.center .movie-image {
-    border: 2px solid black;
-    width: 184px;
-    height: 263px;
+
+.center .icons-and-pages .make-review {
+    max-width: 55px;
+}
+.center .make-review a h2 {
+    font-size: 4.0rem;
 }
 
 .movie-synopsis {
@@ -29,12 +31,7 @@
     flex-wrap: wrap;
     justify-content: space-around;
 }
-.user-review .icons-and-pages .make-review {
-    max-width: 55px;
-}
-.user-review .icons-and-pages .make-review a h2 {
-    font-size: 3.8rem;
-}
+
 .user-review .icons-and-pages .pages {
     max-width: 100px;
     display: flex;
@@ -45,4 +42,31 @@
     width: 25px;
     margin-left: 5px;
     border-radius: 13px;
+}
+
+.user-review .reviews {
+    padding: 20px;
+}
+.user-review .reviews .review {
+    border: 2px solid black;
+    padding: 10px;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+}
+.user-review .reviews .review div{
+    padding: 10px;
+    width: 250px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.user-review .reviews .review .username-container a, .name-container a{
+    font-family: 'Arial';
+    font-size: 1.7rem;
+    color: #00005a;
+}
+
+.user-review .reviews .review .username-container a:hover, .name-container a:hover {
+    color: #0086bd;
 }

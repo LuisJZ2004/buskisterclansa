@@ -2,53 +2,58 @@
 {% load static %}
 
 {% block my_style %}
-<link rel="stylesheet" href="{% static 'movies/css/reviews.css' %}">
+<link rel="stylesheet" href="{% static 'movies/css/reviews_1.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
 {% endblock my_style %}
 
 {% block movie_content %}
 
 <div class="center">
-    
-    <div class="movie-image">
-        <img src="{{movie.image.url}}" alt="" width="180px" height="260px">
+
+    <div class="make-review">
+        <a href="">
+            <h2>📝</h2>
+        </a>
     </div>
 
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">
-      google.charts.load('current', {'packages':['corechart']});
-      google.charts.setOnLoadCallback(drawChart);
+  <script type="text/javascript">
+    google.charts.load('current', {packages: ['corechart', 'bar']});
+    google.charts.setOnLoadCallback(drawBasic);
 
-      function drawChart() {
+    function drawBasic() {
 
-        var data = google.visualization.arrayToDataTable([
-          ['Task', 'Hours per Day'],
-          ['Work',     11],
-          ['Eat',      2],
-          ['Commute',  2],
-          ['Watch TV', 2],
-          ['Sleep',    7]
-        ]);
+          var data = google.visualization.arrayToDataTable([
+            ['', '',],
+            ['', 0],
+            ['1 stars', "{{ stars_rating.1 }}"],
+            ['2 stars', "{{ stars_rating.2 }}"],
+            ['3 stars', "{{ stars_rating.3 }}"],
+            ['4 stars', "{{ stars_rating.4 }}"],
+            ['5 stars', "{{ stars_rating.5 }}"]
+          ]);
 
-        var options = {
-          title: 'My Daily Activities'
-        };
+          var options = {
+            title: 'rating',
+            chartArea: {width: '50%'},
+            hAxis: {
+              title: '',
+              minValue: 0
+            },
+            vAxis: {
+              title: 'rating'
+            }
+          };
 
-        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+          var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
 
-        chart.draw(data, options);
+          chart.draw(data, options);
       }
     </script>
-    <div id="piechart" style="border:1px solid black; width: 330px; height: 290px;"></div>
+    <div id="chart_div" style="border:1px solid black; width: 330px; height: 290px;"></div>
 
 </div>
-<br>
-<br>
-<hr>
-<div class="movie-synopsis">
-    <p>
-        {{ movie.synopsis }}
-    </p>
-</div>
+
 <br>
 <hr>
 <br>
@@ -57,11 +62,20 @@
 <div class="user-review">
 
     <div class="icons-and-pages">
-        <div class="make-review">
-            <a href="">
-                <h2>📝</h2>
-            </a>
+        
+        <div class="orders-container">
+            <select name="order">
+                <option value="">
+                    Order
+                </option>
+            </select>
+            <select name="filter">
+                <option value="">
+                    Filter
+                </option>
+            </select>
         </div>
+
         <div class="pages">
             <button>
                 <h2>1</h2>
@@ -78,9 +92,50 @@
     <div class="reviews">
         {% for review in reviews %}
         <div class="review">
-            <a href="">{{review.user.name}}</a>
-            <a href="">{{review.name}}</a>
+            <div class="username-container">
+                <a href="">{{review.user.username}}</a>
+            </div>
+            <div class="name-container">
+                <a href="">{{review.name}}</a>
+            </div>
             
+            <div class="rating-container" >
+                <label for="star-1" style="font-size:1.4rem">
+                  {% if review.rate_by_stars >= 1  %}
+                  <i class="fa-solid fa-star" style="color:#e59400;"></i>
+                  {% else %}
+                  <i class="fa-solid fa-star"></i>
+                  {% endif %}
+                </label>
+                <label for="star-2" style="font-size:1.4rem">
+                  {% if review.rate_by_stars >= 2  %}
+                  <i class="fa-solid fa-star" style="color:#e59400;"></i>
+                  {% else %}
+                  <i class="fa-solid fa-star"></i>
+                  {% endif %}
+                </label>
+                <label for="star-3" style="font-size:1.4rem">
+                  {% if review.rate_by_stars >= 3  %}
+                  <i class="fa-solid fa-star" style="color:#e59400;"></i>
+                  {% else %}
+                  <i class="fa-solid fa-star"></i>
+                  {% endif %}
+                </label>
+                <label for="star-4" style="font-size:1.4rem">
+                  {% if review.rate_by_stars >= 4  %}
+                  <i class="fa-solid fa-star" style="color:#e59400;"></i>
+                  {% else %}
+                  <i class="fa-solid fa-star"></i>
+                  {% endif %}
+                </label>
+                <label for="star-5" style="font-size:1.4rem">
+                  {% if review.rate_by_stars >= 5  %}
+                  <i class="fa-solid fa-star" style="color:#e59400;"></i>
+                  {% else %}
+                  <i class="fa-solid fa-star"></i>
+                  {% endif %}
+                </label>
+              </div>
         </div>
         {% endfor %}
     </div>
