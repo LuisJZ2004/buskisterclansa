@@ -64,16 +64,32 @@
     <div class="icons-and-pages">
         
         <div class="orders-container">
-            <select name="order">
-                <option value="">
-                    Order
-                </option>
-            </select>
-            <select name="filter">
-                <option value="">
-                    Filter
-                </option>
-            </select>
+            <form action="{% url 'movies:movie_reviews_path' movie.slug movie.pk %}" method="get">
+                <select name="order" onChange="this.form.submit()">
+                    <option value="">Orders</option>
+                    {% for order_name, order_value in orders.items %}
+                    
+                    {% if selected_order != order_value %}
+                        <option value={{order_value}}>{{ order_name }}</option>
+                    {% else %}
+                        <option value={{order_value}} selected>{{ order_name }}</option>
+                    {% endif %}
+
+                    {% endfor %}
+                </select>
+                <select name="filter" onChange="this.form.submit()">
+                    <option value="">Filters</option>
+                    {% for filter_name, filter_value in filters.items %}
+                    
+                    {% if selected_filter != filter_value %}
+                        <option value={{filter_value}}>{{ filter_name }}</option>
+                    {% else %}
+                        <option value={{filter_value}} selected>{{ filter_name }}</option>
+                    {% endif %}
+
+                    {% endfor %}
+                </select>
+            </form>
         </div>
 
         <div class="pages">

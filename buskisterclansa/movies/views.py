@@ -134,16 +134,56 @@ class MovieReviewsListView(ListView):
     template_name = "movies/reviews.html"
     context_object_name = "reviews"
 
+    def __get_orders_indexes(self):
+        return {
+            "stars (higher to lower)": "0",
+            "stars (lower to higher)": "1",
+            # "most rated": 2,
+        }
+    def __get_orders_queries(self, ):
+        return (
+            "-rate_by_stars",
+            "rate_by_stars",
+        )
+    def __get_index_order_or_404(self):
+        try:
+            return self.__get_orders_queries()[int(self.request.GET.get("order"))]
+        except ValueError:
+            raise Http404
+        
+    def __get_filters(self):
+        return {
+            "5 stars": "5",
+            "4 stars": "4",
+            "3 stars": "3",
+            "2 stars": "2",
+            "1 stars": "1",
+        }
+
     def dispatch(self, request, *args, **kwargs):
         self.movie = get_object_or_404(klass=Movie, slug=self.kwargs.get("slug"), pk=self.kwargs.get("pk"))
+        
         return super().dispatch(request, *args, **kwargs)
 
     def get_queryset(self):
         return self.movie.review_set.all()
 
     def get_context_data(self, **kwargs):
+
+        reviews = self.get_queryset()
+
+        if self.request.GET.get("filter"):
+            try:
+                reviews = reviews.filter(rate_by_stars=int(self.request.GET.get("filter")))
+            except ValueError:
+                raise Http404
+        if self.request.GET.get("order"):
+            reviews = reviews.order_by(self.__get_index_order_or_404())
+
+        print(type(self.request.GET.get("order")))
+        print(self.request.GET.get("order") == str(self.__get_orders_indexes()["stars (higher to lower)"]))
         return {
-            self.context_object_name: self.get_queryset().order_by("-pub_date"),
+            self.context_object_name: reviews,
             "movie": self.movie,
             "stars_rating": (
                 "",
@@ -153,6 +193,11 @@ class MovieReviewsListView(ListView):
                 len(self.movie.review_set.filter(rate_by_stars=4)),
                 len(self.movie.review_set.filter(rate_by_stars=5)),
             ),
+            "orders": self.__get_orders_indexes(),
+            "filters": self.__get_filters(),
+
+            "selected_order": str(self.request.GET.get("order")),
+            "selected_filter": self.request.GET.get("filter"),
         }
     
 class AddReviewView(View):
