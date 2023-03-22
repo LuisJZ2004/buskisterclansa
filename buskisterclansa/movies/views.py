@@ -138,7 +138,6 @@ class MovieReviewsListView(ListView):
         return {
             "stars (higher to lower)": "0",
             "stars (lower to higher)": "1",
-            # "most rated": 2,
         }
     def __get_orders_queries(self, ):
         return (
@@ -171,6 +170,9 @@ class MovieReviewsListView(ListView):
     def get_context_data(self, **kwargs):
 
         reviews = self.get_queryset()
+
+        if not self.request.GET.get("filter") and not self.request.GET.get("order"):
+            reviews = reviews.order_by("-pub_date")
 
         if self.request.GET.get("filter"):
             try:

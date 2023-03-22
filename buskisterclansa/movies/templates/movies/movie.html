@@ -324,7 +324,7 @@
     <a href="{% url 'movies:add_review_path' movie_slug movie_pk %}">
       <h1>Write a review</h1>
     </a>
-    <a href="">
+    <a href="{% url 'movies:movie_reviews_path' movie_slug movie_pk %}">
       <h1>See all reviews</h1>
     </a>
   </div>

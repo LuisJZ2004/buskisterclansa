@@ -11,7 +11,7 @@
 <div class="center">
 
     <div class="make-review">
-        <a href="">
+        <a href="{% url 'movies:add_review_path' movie.slug movie.pk %}">
             <h2>📝</h2>
         </a>
     </div>
