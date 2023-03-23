@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block my_style %}
-<link rel="stylesheet" href="{% static 'movies/css/show_review_2.css' %}">
+<link rel="stylesheet" href="{% static 'movies/css/show_review_3.css' %}">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 {% endblock my_style %}
 
@@ -58,4 +58,15 @@
             </div>
         </div>
     </div>
+
+    <div class="write-comment-form-container">
+        <div class="container">
+            <h2>Write a comment</h2>
+            <form action="">
+                <textarea name="a" id="" cols="50" rows="7"></textarea>
+                <input type="submit" name="" id="">
+            </form>
+        </div>
+    </div>
+
 {% endblock movie_content %}
