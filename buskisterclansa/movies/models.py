@@ -139,7 +139,25 @@ class Review(models.Model):
         self.slug = slugify(self.name)
 
         return super().save(*args, **kwargs)
-    
+
+    def has_like_or_dislike(self, option: int, user_pk):
+        """
+        option 1 = like
+        option 2 = dislike
+        any other, Error...
+        """
+
+        options = {
+            1: self.reviewlike_set,
+            2: self.reviewdislike_set,
+        }
+
+        try:
+            options[option].get(user__pk=user_pk)
+            return True
+        except ObjectDoesNotExist:
+            return False
+
 class ReviewLike(models.Model):
     review = models.ForeignKey(to=Review, on_delete=models.CASCADE)
     user = models.ForeignKey(to=CustomUser, on_delete=models.CASCADE)

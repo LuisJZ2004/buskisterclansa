@@ -5,7 +5,7 @@ from django.http import Http404
 from django.core.exceptions import ObjectDoesNotExist
 
 # My apps
-from extra_logic.movies.functions import get_dependant_object_if_it_exist
+from extra_logic.movies.functions import get_dependant_object_if_it_exist, like_dislike
 
 # This app
 from .models import Movie, MovieLike, MovieDislike, Review
@@ -280,4 +280,21 @@ class ReviewDetailView(DetailView):
         return {
             self.context_object_name: self.get_object(),
             "movie": self.movie,
+            "has_like": self.get_object().has_like_or_dislike(option=1, user_pk=self.request.user.pk) if self.request.user.is_authenticated else None,
+            "has_dislike": self.get_object().has_like_or_dislike(option=2, user_pk=self.request.user.pk) if self.request.user.is_authenticated else None,
+            "like_counter": len(self.get_object().reviewlike_set.all()),
+            "dislike_counter": len(self.get_object().reviewdislike_set.all()),
         }
+    
+class LikeDislikeReviewView(View):
+    def post(self, request, *args, **kwargs):
+        review = get_object_or_404(klass=Review, pk=self.kwargs.get("review_pk"))
+
+        if request.POST.get("rating") == "like":
+            like_dislike(request=request, action_to_do=review.reviewlike_set, action_to_delete=review.reviewdislike_set)
+        elif request.POST.get("rating") == "dislike": 
+            like_dislike(request=request, action_to_do=review.reviewdislike_set, action_to_delete=review.reviewlike_set)
+        else:
+            raise Http404
+        
+        return redirect(to="movies:review_path", slug=self.kwargs.get("slug"), pk=self.kwargs.get("pk"), review_pk=self.kwargs.get("review_pk"))
