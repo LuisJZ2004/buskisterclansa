@@ -1,0 +1,38 @@
+.main-comment-container {
+    border: 2px solid black;
+    margin-top: 15px;
+    padding: 10px; 
+}
+.main-comment-container .username-container {
+    padding: 10px; 
+}
+.main-comment-container .username-container a {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 1.9rem;
+}
+.main-comment-container .review-name-container {
+    padding: 10px; 
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: 1.9rem;
+}
+.main-comment-container .review-content-container {
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.main-comment-container .review-content-container .paragraph-container {
+    width: 750px;
+    border: 2px solid black;
+    border-radius: 20px;
+    padding: 10px;
+}
+.main-comment-container .review-content-container .paragraph-container p {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1.7rem;
+    text-align: start;
+}

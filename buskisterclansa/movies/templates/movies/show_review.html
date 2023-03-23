@@ -1,6 +1,10 @@
 {% extends 'movies/movie_layout.html' %}
 {% load static %}
 
+{% block my_style %}
+<link rel="stylesheet" href="{% static 'movies/css/show_review_1.css' %}">
+{% endblock my_style %}
+
 {% block movie_content %}
     <div class="main-comment-container">
         <div class="username-container">
@@ -14,9 +18,12 @@
             </h2>
         </div>
         <div class="review-content-container">
-            <p>
-                {{review.content}}
-            </p>
+            <div class="paragraph-container">
+                <p>
+                    {{review.content}}
+                </p>
+
+            </div>
         </div>
     </div>
 {% endblock movie_content %}
