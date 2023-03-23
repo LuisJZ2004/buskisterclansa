@@ -171,3 +171,17 @@ class ReviewDislike(models.Model):
 
     def __str__(self) -> str:
         return f"{self.user.username} dislikes '{self.review.name}'"
+    
+class ReviewComment(models.Model):
+    review = models.ForeignKey(to=Review, on_delete=models.CASCADE)
+    user = models.ForeignKey(to=CustomUser, on_delete=models.CASCADE)
+
+    content = models.TextField(max_length=300, null=False, blank=False,)
+
+class CommentLike(models.Model):
+    comment = models.ForeignKey(to=ReviewComment, on_delete=models.CASCADE)
+    user = models.ForeignKey(to=CustomUser, on_delete=models.CASCADE)
+
+class CommentDislike(models.Model):
+    comment = models.ForeignKey(to=ReviewComment, on_delete=models.CASCADE)
+    user = models.ForeignKey(to=CustomUser, on_delete=models.CASCADE)
