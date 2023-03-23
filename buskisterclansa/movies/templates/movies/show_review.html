@@ -62,8 +62,11 @@
     <div class="write-comment-form-container">
         <div class="container">
             <h2>Write a comment</h2>
-            <form action="">
-                <textarea name="a" id="" cols="50" rows="7"></textarea>
+            <form action="{% url 'movies:add_comment_review_path' movie.slug movie.pk review.pk %}" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="review" value={{ review.pk }}>
+                <input type="hidden" name="user" value={{ request.user.pk }}>
+                <textarea name="content" id="" cols="50" rows="7"></textarea>
                 <input type="submit" name="" id="">
             </form>
         </div>

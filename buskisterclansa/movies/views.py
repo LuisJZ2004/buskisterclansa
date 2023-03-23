@@ -8,8 +8,8 @@ from django.core.exceptions import ObjectDoesNotExist
 from extra_logic.movies.functions import get_dependant_object_if_it_exist, like_dislike
 
 # This app
-from .models import Movie, MovieLike, MovieDislike, Review
-from .forms import ReviewForm
+from .models import Movie, Review, ReviewComment
+from .forms import ReviewForm, ReviewCommentForm
 
 class MovieView(DetailView):
     model=Movie
@@ -298,3 +298,11 @@ class LikeDislikeReviewView(View):
             raise Http404
         
         return redirect(to="movies:review_path", slug=self.kwargs.get("slug"), pk=self.kwargs.get("pk"), review_pk=self.kwargs.get("review_pk"))
+    
+class AddCommentReviewView(View):
+    def post(self, request, *args, **kwargs):
+        form = ReviewCommentForm(request.POST)
+        if form.is_valid():
+            form.save()
+        return redirect(to="movies:review_path", slug=self.kwargs.get("slug"), pk=self.kwargs.get("pk"), review_pk=self.kwargs.get("review_pk"))
+        
