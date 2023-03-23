@@ -22,6 +22,7 @@
 .main-comment-container .review-content-container {
     padding: 10px;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
 }
@@ -35,4 +36,36 @@
     font-family: Arial, Helvetica, sans-serif;
     font-size: 1.7rem;
     text-align: start;
+}
+.main-comment-container .review-content-container .like-dislike-container {
+    border: 2px solid black;
+    margin-top: 10px;
+    display: flex;
+    width: 120px;
+    height: 70px; 
+    background-color: white;  
+    box-shadow: 2px 2px 5px grey, -2px -2px 5px grey;
+    justify-content: center;
+    align-items: center;   
+}
+.main-comment-container .review-content-container .like-dislike-container i {
+    color: black;
+}
+
+.like h3, .dislike h3 {
+    text-align: center;
+}
+
+.like {
+    margin: 15px;
+}
+.like i {
+    font-size: 25px;
+}
+
+.dislike {
+    margin: 15px;
+}
+.dislike i {
+    font-size: 25px;
 }

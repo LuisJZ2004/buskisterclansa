@@ -2,7 +2,8 @@
 {% load static %}
 
 {% block my_style %}
-<link rel="stylesheet" href="{% static 'movies/css/show_review_1.css' %}">
+<link rel="stylesheet" href="{% static 'movies/css/show_review_2.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 {% endblock my_style %}
 
 {% block movie_content %}
@@ -22,7 +23,21 @@
                 <p>
                     {{review.content}}
                 </p>
-
+            </div>
+            <div class="like-dislike-container">
+                <div class="like">
+                    <button style="color: transparent; background-color: transparent; border-color: transparent; cursor: default;">
+                        <i class="fas fa-thumbs-up"></i>
+                    </button>
+                    <h3>3</h3>
+                </div>
+                <div class="dislike">
+                    <button style="color: transparent; background-color: transparent; border-color: transparent; cursor: default;">
+                        <i class="fas fa-thumbs-down"></i>
+                    </button>
+                    
+                    <h3>3</h3>
+                </div>
             </div>
         </div>
     </div>
