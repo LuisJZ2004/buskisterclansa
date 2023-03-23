@@ -284,6 +284,8 @@ class ReviewDetailView(DetailView):
             "has_dislike": self.get_object().has_like_or_dislike(option=2, user_pk=self.request.user.pk) if self.request.user.is_authenticated else None,
             "like_counter": len(self.get_object().reviewlike_set.all()),
             "dislike_counter": len(self.get_object().reviewdislike_set.all()),
+
+            "comments": self.get_object().reviewcomment_set.all().order_by("-pk"),
         }
     
 class LikeDislikeReviewView(View):

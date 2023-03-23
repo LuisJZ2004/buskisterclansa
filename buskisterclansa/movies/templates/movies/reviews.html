@@ -112,7 +112,7 @@
                 <a href="">{{review.user.username}}</a>
             </div>
             <div class="name-container">
-                <a href="">{{review.name}}</a>
+                <a href="{% url 'movies:review_path' movie.slug movie.pk review.pk %}">{{review.name}}</a>
             </div>
             
             <div class="rating-container" >

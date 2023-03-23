@@ -72,4 +72,20 @@
         </div>
     </div>
 
+    <div class="comments-review-container">
+        {% for comment in comments %}
+            <div class="comment">
+                <a href="">
+                    <h3>{{ comment.user.username }}</h3>
+                </a>
+                <div class="content-container">
+                    <p>
+                        {{ comment.content }}
+                    </p>
+                </div>
+                
+            </div>
+        {% endfor %}
+    </div>
+
 {% endblock movie_content %}

@@ -29,6 +29,7 @@
 .main-comment-container .review-content-container .paragraph-container {
     width: 750px;
     border: 2px solid black;
+    background-color: white;
     border-radius: 20px;
     padding: 10px;
 }
@@ -90,4 +91,31 @@
 .write-comment-form-container input {
     width: 60px;
     height: 25px;
+}
+
+.comments-review-container {
+    margin-top: 15px;
+    border-top: 2px solid black;
+    padding: 20px;
+}
+.comments-review-container .content-container {
+    border: 2px solid black;
+    background-color: aliceblue;
+    border-radius: 15px;
+    padding: 10px;
+    width: 700px;
+    margin-top: 10px;
+    margin-bottom: 35px;
+}
+.comments-review-container h3 {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 1.6rem;
+    color: black;
+}
+.comments-review-container a h3:hover {
+    color: rgb(41, 41, 41)
+}
+.comments-review-container p {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1.4rem;
 }
