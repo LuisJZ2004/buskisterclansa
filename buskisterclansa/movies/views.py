@@ -260,3 +260,24 @@ class DeleteReviewView(View):
             self.comment.delete()
         
         return redirect(to="movies:movie_path", slug=self.kwargs.get("slug"), pk=self.kwargs.get("pk"))
+
+class ReviewDetailView(DetailView):
+    template_name="movies/show_review.html"
+    context_object_name="review"
+
+    def dispatch(self, request, *args, **kwargs):
+        self.movie = get_object_or_404(klass=Movie, slug=self.kwargs.get("slug"), pk=self.kwargs.get("pk"))
+        
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_queryset(self):
+        return self.movie.review_set.all()
+    
+    def get_object(self, *args, **kwargs):
+        return get_object_or_404(klass=self.get_queryset(), pk=self.kwargs.get("review_pk"))
+    
+    def get_context_data(self, **kwargs):
+        return {
+            self.context_object_name: self.get_object(),
+            "movie": self.movie,
+        }
