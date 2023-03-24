@@ -169,7 +169,9 @@ class MovieReviewsListView(ListView):
     def get_context_data(self, **kwargs):
 
         reviews = self.get_queryset()
-        page = int_or_404(self.request.GET.get("page"))
+        page = None
+        if self.request.GET.get("page"):
+            page = int_or_404(self.request.GET.get("page"))
 
         if not self.request.GET.get("filter") and not self.request.GET.get("order"):
             reviews = reviews.order_by("-pub_date")
@@ -179,6 +181,8 @@ class MovieReviewsListView(ListView):
         if self.request.GET.get("order"):
             reviews = reviews.order_by(self.__get_index_order_or_404())
 
+        number_of_pages = get_pagination_numbers(reviews, 5)
+
         if page and page != 0:
             aux = reviews
             reviews = make_pagination(reviews, page, 5)
@@ -187,8 +191,6 @@ class MovieReviewsListView(ListView):
         else:
             reviews = make_pagination(reviews, 1, 5)
 
-        print(type(self.request.GET.get("order")))
-        print(self.request.GET.get("order") == str(self.__get_orders_indexes()["stars (higher to lower)"]))
         return {
             self.context_object_name: reviews,
             "movie": self.movie,
@@ -202,9 +204,14 @@ class MovieReviewsListView(ListView):
             ),
             "orders": self.__get_orders_indexes(),
             "filters": self.__get_filters(),
+            "number_of_pages": number_of_pages,
 
-            "selected_order": str(self.request.GET.get("order")),
+            "selected_order": self.request.GET.get("order"),
             "selected_filter": self.request.GET.get("filter"),
+            "selected_page": page,
+
+            "previous_page": page - 1 if page != None and page > 1 else None,
+            "next_page": page + 1 if page != None and page != number_of_pages else None,
         }
     
 class AddReviewView(View):
