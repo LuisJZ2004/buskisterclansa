@@ -6,6 +6,7 @@ from django.core.exceptions import ObjectDoesNotExist
 
 # My apps
 from extra_logic.movies.functions import get_dependant_object_if_it_exist, like_dislike
+from extra_logic.functions import make_pagination, get_pagination_numbers, int_or_404
 
 # This app
 from .models import Movie, Review, ReviewComment
@@ -145,10 +146,8 @@ class MovieReviewsListView(ListView):
             "rate_by_stars",
         )
     def __get_index_order_or_404(self):
-        try:
-            return self.__get_orders_queries()[int(self.request.GET.get("order"))]
-        except ValueError:
-            raise Http404
+        return self.__get_orders_queries()[int_or_404(self.request.GET.get("order"))]
+
         
     def __get_filters(self):
         return {
@@ -170,17 +169,23 @@ class MovieReviewsListView(ListView):
     def get_context_data(self, **kwargs):
 
         reviews = self.get_queryset()
+        page = int_or_404(self.request.GET.get("page"))
 
         if not self.request.GET.get("filter") and not self.request.GET.get("order"):
             reviews = reviews.order_by("-pub_date")
 
         if self.request.GET.get("filter"):
-            try:
-                reviews = reviews.filter(rate_by_stars=int(self.request.GET.get("filter")))
-            except ValueError:
-                raise Http404
+            reviews = reviews.filter(rate_by_stars=int_or_404(self.request.GET.get("filter")))
         if self.request.GET.get("order"):
             reviews = reviews.order_by(self.__get_index_order_or_404())
+
+        if page and page != 0:
+            aux = reviews
+            reviews = make_pagination(reviews, page, 5)
+            if not reviews:
+                reviews = make_pagination(aux, 1, 5)
+        else:
+            reviews = make_pagination(reviews, 1, 5)
 
         print(type(self.request.GET.get("order")))
         print(self.request.GET.get("order") == str(self.__get_orders_indexes()["stars (higher to lower)"]))

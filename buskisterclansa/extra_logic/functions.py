@@ -1,4 +1,5 @@
 from django.db.models import QuerySet
+from django.http import Http404
 
 def make_pagination(queryset: QuerySet, page_number: int, pagination_number: int):
     """
@@ -21,3 +22,14 @@ def get_pagination_numbers(queryset: list, pagination_number: int):
             break
 
     return final_number
+
+def int_or_404(value):
+    """
+    turns a value into an int value and returns it, if ValueError or TypeError, 404
+    """
+    try:
+        return int(value)
+    except ValueError:
+        raise Http404
+    except TypeError:
+        raise Http404
