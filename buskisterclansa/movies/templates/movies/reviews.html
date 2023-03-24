@@ -63,6 +63,8 @@
 
     <div class="icons-and-pages">
         
+        <a href="{% url 'movies:movie_reviews_path' movie.slug movie.pk %}" class="clear-filters">Clear filters</a>
+
         <div class="orders-container">
             <form action="{% url 'movies:movie_reviews_path' movie.slug movie.pk %}" method="get">
               {% if selected_page %}
@@ -107,6 +109,9 @@
             {% endif %}
 
             {% if previous_page %}
+              <button name="page" type="submit" value="1">
+                <h2>1</h2>
+              </button> 
               <button name="page" type="submit" value="{{previous_page}}">
                 <h2><</h2>
               </button>            
@@ -125,8 +130,8 @@
             <button name="page" type="submit" value={{next_page}}>
               <h2>></h2>
             </button>
-            <button name="page" type="submit" value={{pages_number}}>
-              <h2>{{pages_number}}</h2>
+            <button name="page" type="submit" value={{number_of_pages}}>
+              <h2>{{number_of_pages}}</h2>
             </button>            
             {% endif %}
           </form>

@@ -37,7 +37,7 @@ class MovieView(DetailView):
             "movie_pk": self.kwargs.get("pk"),
             "movie_slug": self.kwargs.get("slug"),
 
-            "reviews": self.get_object().review_set.all().order_by("-pub_date")[:5],
+            "reviews": self.get_object().review_set.all().order_by("-pk")[:5],
             "stars_rating": (
                 "",
                 len(self.get_object().review_set.filter(rate_by_stars=1)),
@@ -172,9 +172,11 @@ class MovieReviewsListView(ListView):
         page = None
         if self.request.GET.get("page"):
             page = int_or_404(self.request.GET.get("page"))
+        else:
+            page = 1
 
         if not self.request.GET.get("filter") and not self.request.GET.get("order"):
-            reviews = reviews.order_by("-pub_date")
+            reviews = reviews.order_by("-pk")
 
         if self.request.GET.get("filter"):
             reviews = reviews.filter(rate_by_stars=int_or_404(self.request.GET.get("filter")))
@@ -188,6 +190,7 @@ class MovieReviewsListView(ListView):
             reviews = make_pagination(reviews, page, 5)
             if not reviews:
                 reviews = make_pagination(aux, 1, 5)
+                page = 1
         else:
             reviews = make_pagination(reviews, 1, 5)
 
@@ -210,8 +213,8 @@ class MovieReviewsListView(ListView):
             "selected_filter": self.request.GET.get("filter"),
             "selected_page": page,
 
-            "previous_page": page - 1 if page != None and page > 1 else None,
-            "next_page": page + 1 if page != None and page != number_of_pages else None,
+            "previous_page": page - 1 if page > 1 and number_of_pages > 1 else None,
+            "next_page": page + 1 if page != number_of_pages and number_of_pages > 1 else None,
         }
     
 class AddReviewView(View):
