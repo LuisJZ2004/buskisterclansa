@@ -100,36 +100,6 @@ class DragMovieStaffView(View):
             iterator += 1
 
         return redirect(to="movies:drag_movie_staff_path", slug=self.kwargs.get("slug"), pk=self.kwargs.get("pk"), job=self.kwargs.get("job") )
-
-class LikeDislikeView(View):
-    def post(self, request, *args, **kwargs):
-        movie = get_object_or_404(klass=Movie, slug=self.kwargs.get("slug"), pk=self.kwargs.get("pk"))
-        
-        
-        if request.POST.get("rate") == "like":
-            try:
-                like = movie.movielike_set.get(user__pk=request.user.pk)
-                like.delete()
-            except ObjectDoesNotExist:
-                try:
-                    dislike = movie.moviedislike_set.get(user__pk=request.user.pk)
-                    dislike.delete()
-                except ObjectDoesNotExist:
-                    pass
-                movie.movielike_set.create(user=request.user)
-        elif request.POST.get("rate") == "dislike":
-            try:
-                dislike = movie.moviedislike_set.get(user__pk=request.user.pk)
-                dislike.delete()
-            except ObjectDoesNotExist:
-                try:
-                    like = movie.movielike_set.get(user__pk=request.user.pk)
-                    like.delete()
-                except ObjectDoesNotExist:
-                    pass
-                movie.moviedislike_set.create(user=request.user)
-
-        return redirect(to="movies:movie_path", slug=self.kwargs.get("slug"), pk=self.kwargs.get("pk"))
     
 class MovieReviewsListView(ListView):
     template_name = "movies/reviews.html"
