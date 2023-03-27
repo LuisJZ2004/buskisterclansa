@@ -58,4 +58,8 @@ main .main-container .staff-items div {
 main .main-container .staff-items div a {
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     font-size: 1.8rem;
+    color: #00004c;
+}
+main .main-container .staff-items div a:hover {
+    color: #147aff;
 }
