@@ -12,10 +12,12 @@ from .views import (
     ReviewDetailView,
     LikeDislikeReviewView,
     AddCommentReviewView,
+    StaffOfAMovieView,
 )
 app_name="movies"
 urlpatterns = [
     path("<slug>/<pk>/", MovieView.as_view(), name="movie_path"),
+    path("<slug>/<pk>/staff/<job>/", StaffOfAMovieView.as_view(), name="staff_of_a_movie_path"),
     path("<slug>/<pk>/reviews/", MovieReviewsListView.as_view(), name="movie_reviews_path"),
     path("<slug>/<pk>/reviews/add-review/", login_required(AddReviewView.as_view()), name="add_review_path"),
     path("<slug>/<pk>/reviews/delete-review/", login_required(DeleteReviewView.as_view()), name="delete_review_path"),

@@ -5,6 +5,7 @@ from django.http import Http404
 from django.core.exceptions import ObjectDoesNotExist
 
 # My apps
+from movie_staff.models import MovieStaff
 from extra_logic.movies.functions import get_dependant_object_if_it_exist, like_dislike
 from extra_logic.functions import make_pagination, get_pagination_numbers, int_or_404
 
@@ -293,3 +294,36 @@ class AddCommentReviewView(View):
             form.save()
         return redirect(to="movies:review_path", slug=self.kwargs.get("slug"), pk=self.kwargs.get("pk"), review_pk=self.kwargs.get("review_pk"))
         
+class StaffOfAMovieView(View):
+    template_name = "movies/movie_staff.html"
+
+    def dispatch(self, request, *args, **kwargs):
+        self.movie = get_object_or_404(klass=Movie, slug=self.kwargs.get("slug"), pk=self.kwargs.get("pk"))    
+        return super().dispatch(request, *args, **kwargs)
+    
+    def __get_jobs(self, job: str):
+        try:
+            return {
+                "directors": self.movie.directors.all().order_by("director__order"),
+                "created_by": self.movie.created_by.all().order_by("createdby__order"),
+                "script": self.movie.scripts.all().order_by("script__order"),
+                "producers": self.movie.producers.all().order_by("producer__order"),
+                "cast": self.movie.casts.all().order_by("cast__order"),
+            }[job]
+        except KeyError:
+            raise Http404
+
+    def get_context_data(self, **kwargs):
+        return {
+            "movie": self.movie,
+            
+            "job": self.__get_jobs(self.kwargs.get("job"))
+        }
+    
+    def get(self, request, *args, **kwargs):
+        return render(
+            request=request,
+            template_name=self.template_name,
+            context=self.get_context_data()
+        )
+    
