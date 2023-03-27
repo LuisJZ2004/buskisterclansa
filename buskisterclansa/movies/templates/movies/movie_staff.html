@@ -1,2 +1,38 @@
 {% extends 'movies/movie_layout.html' %}
 {% load static %}
+
+{% block my_style %}
+<link rel="stylesheet" href="{% static 'movies/css/movie_staff.css' %}">
+{% endblock my_style %}
+
+{% block movie_content %}
+
+<div class="staff-jobs-header">
+    <div class="job-item">
+        <a href="{% url 'movies:staff_of_a_movie_path' movie.slug movie.pk "cast" %}">
+            Cast
+        </a>
+    </div>
+    <div class="job-item">
+        <a href="{% url 'movies:staff_of_a_movie_path' movie.slug movie.pk "directors" %}">
+            Directors
+        </a>
+    </div>
+    <div class="job-item">
+        <a href="{% url 'movies:staff_of_a_movie_path' movie.slug movie.pk "created_by" %}">
+            Created by
+        </a>
+    </div>
+    <div class="job-item">
+        <a href="{% url 'movies:staff_of_a_movie_path' movie.slug movie.pk "script" %}">
+            Script
+        </a>
+    </div>
+    <div class="job-item">
+        <a href="{% url 'movies:staff_of_a_movie_path' movie.slug movie.pk "producers" %}">
+            Producers
+        </a>
+    </div>
+</div>
+
+{% endblock movie_content %}
