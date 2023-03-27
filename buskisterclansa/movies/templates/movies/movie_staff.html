@@ -35,4 +35,17 @@
     </div>
 </div>
 
+<div class="staff">
+    {% for person in job %}
+    <div class="person">
+        <img src={{ person.image.url }} alt="" width="110px" >
+        <span>
+          <a href="">
+            {{ person.name }}
+          </a>
+        </span>
+      </div>
+    {% endfor %}
+</div>
+
 {% endblock movie_content %}
