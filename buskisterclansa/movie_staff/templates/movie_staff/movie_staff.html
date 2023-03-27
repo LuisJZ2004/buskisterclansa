@@ -2,41 +2,26 @@
 {% load static %}
 
 {% block styles %}
-<link rel="stylesheet" href="{% static 'movie_staff/css/movie_staff.css' %}">
+<link rel="stylesheet" href="{% static 'movie_staff/css/movie_staff_2.css' %}">
 {% endblock styles %}
 
 {% block content %}
 <main>
     <div class="main-container">
         <div class="title">
-            <h1>name</h1>
-        </div>
-        
-        <div class="movie-header">
-            <div class="header-item">
-                <a href="">
-                    <h3>
-                        Info
-                    </h3>
-                </a>
+            <h1>{{ staff.name }}</h1>
+        </div>        
+
+        <div class="center">
+            <div class="staff-image">
+                <img src="{{ staff.image.url }}" alt="" width="150px">
             </div>
-            <div class="header-item">
-                <a href="">
-                    <h3>
-                        Reviews
-                    </h3>
-                </a>
-            </div>
-            <div class="header-item">
-                <a href="">
-                    <h3>
-                        Trailers
-                    </h3>
-                </a>
+            <div class="bio">
+                <p>
+                    {{ staff.bio }}
+                </p>
             </div>
         </div>
-        
-                
 
     </div>
 </main>
