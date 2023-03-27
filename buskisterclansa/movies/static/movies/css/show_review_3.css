@@ -1,0 +1,121 @@
+.main-comment-container {
+    border: 2px solid black;
+    margin-top: 15px;
+    padding: 10px; 
+}
+.main-comment-container .username-container {
+    padding: 10px; 
+}
+.main-comment-container .username-container a {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 1.9rem;
+}
+.main-comment-container .review-name-container {
+    padding: 10px; 
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: 1.9rem;
+}
+.main-comment-container .review-content-container {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.main-comment-container .review-content-container .paragraph-container {
+    width: 750px;
+    border: 2px solid black;
+    background-color: white;
+    border-radius: 20px;
+    padding: 10px;
+}
+.main-comment-container .review-content-container .paragraph-container p {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1.7rem;
+    text-align: start;
+}
+.main-comment-container .review-content-container .like-dislike-container {
+    border: 2px solid black;
+    margin-top: 10px;
+    display: flex;
+    width: 120px;
+    height: 70px; 
+    background-color: white;  
+    box-shadow: 2px 2px 5px grey, -2px -2px 5px grey;
+    justify-content: center;
+    align-items: center;   
+}
+.main-comment-container .review-content-container .like-dislike-container i {
+    color: black;
+}
+
+.like h3, .dislike h3 {
+    text-align: center;
+}
+
+.like {
+    margin: 15px;
+}
+.like i {
+    font-size: 25px;
+}
+
+.dislike {
+    margin: 15px;
+}
+.dislike i {
+    font-size: 25px;
+}
+
+.write-comment-form-container {
+    margin-top: 10px;
+    padding: 15px;
+}
+.write-comment-form-container h2 {
+    margin: 10px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 1.7rem;
+}
+.write-comment-form-container textarea {
+    resize: none; 
+    outline:none;
+    margin-left:15px;
+    border: 2px solid black;
+    border-radius: 10px;
+    font-size: 1.4rem;
+}
+.write-comment-form-container input {
+    width: 60px;
+    height: 25px;
+}
+
+.comments-review-container {
+    margin-top: 15px;
+    border-top: 2px solid black;
+    padding: 20px;
+}
+.comments-review-container .content-container {
+    border: 2px solid black;
+    background-color: aliceblue;
+    border-radius: 15px;
+    padding: 10px;
+    width: 700px;
+    margin-top: 10px;
+    margin-bottom: 35px;
+}
+.comments-review-container h3 {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 1.6rem;
+    color: black;
+}
+.comments-review-container a h3:hover {
+    color: rgb(41, 41, 41)
+}
+.comments-review-container p {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1.4rem;
+}

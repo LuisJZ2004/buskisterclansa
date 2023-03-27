@@ -23,14 +23,15 @@
       
 
       .movie-header {
-        border: 2px solid black;
+        border-top: 2px solid black;
+        border-bottom: 2px solid black;
+        padding: 6px;
         display: flex;
         flex-direction: block;
       }
       .movie-header .header-item {
         padding: 2px;
         width: 90px;
-        border: 1px solid black;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -55,14 +56,14 @@
         
         <div class="movie-header">
             <div class="header-item">
-                <a href="">
+                <a href="{% url 'movies:movie_path' movie.slug movie.pk %}">
                     <h3>
                         Info
                     </h3>
                 </a>
             </div>
             <div class="header-item">
-                <a href="">
+                <a href="{% url 'movies:movie_reviews_path' movie.slug movie.pk %}">
                     <h3>
                         Reviews
                     </h3>

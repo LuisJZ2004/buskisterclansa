@@ -119,3 +119,69 @@ class MovieDislike(models.Model):
 
     def __str__(self) -> str:
         return f"{self.user.username} dislikes '{self.movie.name}'"
+
+# Reviews    
+class Review(models.Model):
+    movie = models.ForeignKey(to=Movie, on_delete=models.CASCADE)
+    user = models.ForeignKey(to=CustomUser, on_delete=models.PROTECT)
+
+    name = models.CharField(max_length=30, null=False, blank=False)
+    slug = models.SlugField(max_length=30, null=False, blank=False, editable=False)
+    content = models.TextField(max_length=2600, null=False, blank=False)
+    pub_date = models.DateTimeField(default=timezone.now(), null=False, blank=False)
+
+    rate_by_stars = models.IntegerField(choices=((1,1,),(2,2,),(3,3,),(4,4,),(5,5,),), null=False, blank=False)
+
+    def __str__(self) -> str:
+        return self.name
+    
+    def save(self, *args, **kwargs) -> None:
+        self.slug = slugify(self.name)
+
+        return super().save(*args, **kwargs)
+
+    def has_like_or_dislike(self, option: int, user_pk):
+        """
+        option 1 = like
+        option 2 = dislike
+        any other, Error...
+        """
+
+        options = {
+            1: self.reviewlike_set,
+            2: self.reviewdislike_set,
+        }
+
+        try:
+            options[option].get(user__pk=user_pk)
+            return True
+        except ObjectDoesNotExist:
+            return False
+
+class ReviewLike(models.Model):
+    review = models.ForeignKey(to=Review, on_delete=models.CASCADE)
+    user = models.ForeignKey(to=CustomUser, on_delete=models.CASCADE)
+
+    def __str__(self) -> str:
+        return f"{self.user.username} likes '{self.review.name}'"
+    
+class ReviewDislike(models.Model):
+    review = models.ForeignKey(to=Review, on_delete=models.CASCADE)
+    user = models.ForeignKey(to=CustomUser, on_delete=models.CASCADE)
+
+    def __str__(self) -> str:
+        return f"{self.user.username} dislikes '{self.review.name}'"
+    
+class ReviewComment(models.Model):
+    review = models.ForeignKey(to=Review, on_delete=models.CASCADE)
+    user = models.ForeignKey(to=CustomUser, on_delete=models.CASCADE)
+
+    content = models.TextField(max_length=300, null=False, blank=False,)
+
+class CommentLike(models.Model):
+    comment = models.ForeignKey(to=ReviewComment, on_delete=models.CASCADE)
+    user = models.ForeignKey(to=CustomUser, on_delete=models.CASCADE)
+
+class CommentDislike(models.Model):
+    comment = models.ForeignKey(to=ReviewComment, on_delete=models.CASCADE)
+    user = models.ForeignKey(to=CustomUser, on_delete=models.CASCADE)

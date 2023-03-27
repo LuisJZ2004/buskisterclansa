@@ -1,0 +1,194 @@
+{% extends 'movies/movie_layout.html' %}
+{% load static %}
+
+{% block my_style %}
+<link rel="stylesheet" href="{% static 'movies/css/reviews_2.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+{% endblock my_style %}
+
+{% block movie_content %}
+
+<div class="center">
+
+    <div class="make-review">
+        <a href="{% url 'movies:add_review_path' movie.slug movie.pk %}">
+            <h2>📝</h2>
+        </a>
+    </div>
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script type="text/javascript">
+    google.charts.load('current', {packages: ['corechart', 'bar']});
+    google.charts.setOnLoadCallback(drawBasic);
+
+    function drawBasic() {
+
+          var data = google.visualization.arrayToDataTable([
+            ['', '',],
+            ['', 0],
+            ['1 stars', "{{ stars_rating.1 }}"],
+            ['2 stars', "{{ stars_rating.2 }}"],
+            ['3 stars', "{{ stars_rating.3 }}"],
+            ['4 stars', "{{ stars_rating.4 }}"],
+            ['5 stars', "{{ stars_rating.5 }}"]
+          ]);
+
+          var options = {
+            title: 'rating',
+            chartArea: {width: '50%'},
+            hAxis: {
+              title: '',
+              minValue: 0
+            },
+            vAxis: {
+              title: 'rating'
+            }
+          };
+
+          var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+
+          chart.draw(data, options);
+      }
+    </script>
+    <div id="chart_div" style="border:1px solid black; width: 330px; height: 290px;"></div>
+
+</div>
+
+<br>
+<hr>
+<br>
+<br>
+
+<div class="user-review">
+
+    <div class="icons-and-pages">
+        
+        <a href="{% url 'movies:movie_reviews_path' movie.slug movie.pk %}" class="clear-filters">Clear filters</a>
+
+        <div class="orders-container">
+            <form action="{% url 'movies:movie_reviews_path' movie.slug movie.pk %}" method="get">
+              {% if selected_page %}
+              <input name="page" type="hidden" value="{{selected_page}}">
+              {% endif %}
+
+                <select name="order" onChange="this.form.submit()">
+                    <option value="">Orders</option>
+                    {% for order_name, order_value in orders.items %}
+                    
+                    {% if selected_order != order_value %}
+                        <option value={{order_value}}>{{ order_name }}</option>
+                    {% else %}
+                        <option value={{order_value}} selected>{{ order_name }}</option>
+                    {% endif %}
+
+                    {% endfor %}
+                </select>
+                <select name="filter" onChange="this.form.submit()">
+                    <option value="">Filters</option>
+                    {% for filter_name, filter_value in filters.items %}
+                    
+                    {% if selected_filter != filter_value %}
+                        <option value={{filter_value}}>{{ filter_name }}</option>
+                    {% else %}
+                        <option value={{filter_value}} selected>{{ filter_name }}</option>
+                    {% endif %}
+
+                    {% endfor %}
+                </select>
+            </form>
+        </div>
+
+        <div class="pages">
+          <form action="{% url 'movies:movie_reviews_path' movie.slug movie.pk %}" method="get">
+
+            {% if selected_filter %}
+              <input name="filter" type="hidden" value="{{selected_filter}}">
+            {% endif %}
+            {% if selected_order %}
+              <input name="order" type="hidden" value="{{selected_order}}">
+            {% endif %}
+
+            {% if previous_page %}
+              <button name="page" type="submit" value="1">
+                <h2>1</h2>
+              </button> 
+              <button name="page" type="submit" value="{{previous_page}}">
+                <h2><</h2>
+              </button>            
+            {% endif %}
+            {% if selected_page %}
+              <button name="page" type="submit" value="{{selected_page}}">
+                <h2>{{selected_page}}</h2>
+              </button>
+            {% else %}
+              <button name="page" type="submit" value="1">
+                <h2>1</h2>
+              </button>
+            {% endif %}
+
+            {% if next_page %}
+            <button name="page" type="submit" value={{next_page}}>
+              <h2>></h2>
+            </button>
+            <button name="page" type="submit" value={{number_of_pages}}>
+              <h2>{{number_of_pages}}</h2>
+            </button>            
+            {% endif %}
+          </form>
+        </div>
+    </div>
+
+    <div class="reviews">
+        {% for review in reviews %}
+        <div class="review">
+            <div class="username-container">
+                <a href="">{{review.user.username}}</a>
+            </div>
+            <div class="name-container">
+                <a href="{% url 'movies:review_path' movie.slug movie.pk review.pk %}">{{review.name}}</a>
+            </div>
+            
+            <div class="rating-container" >
+                <label for="star-1" style="font-size:1.4rem">
+                  {% if review.rate_by_stars >= 1  %}
+                  <i class="fa-solid fa-star" style="color:#e59400;"></i>
+                  {% else %}
+                  <i class="fa-solid fa-star"></i>
+                  {% endif %}
+                </label>
+                <label for="star-2" style="font-size:1.4rem">
+                  {% if review.rate_by_stars >= 2  %}
+                  <i class="fa-solid fa-star" style="color:#e59400;"></i>
+                  {% else %}
+                  <i class="fa-solid fa-star"></i>
+                  {% endif %}
+                </label>
+                <label for="star-3" style="font-size:1.4rem">
+                  {% if review.rate_by_stars >= 3  %}
+                  <i class="fa-solid fa-star" style="color:#e59400;"></i>
+                  {% else %}
+                  <i class="fa-solid fa-star"></i>
+                  {% endif %}
+                </label>
+                <label for="star-4" style="font-size:1.4rem">
+                  {% if review.rate_by_stars >= 4  %}
+                  <i class="fa-solid fa-star" style="color:#e59400;"></i>
+                  {% else %}
+                  <i class="fa-solid fa-star"></i>
+                  {% endif %}
+                </label>
+                <label for="star-5" style="font-size:1.4rem">
+                  {% if review.rate_by_stars >= 5  %}
+                  <i class="fa-solid fa-star" style="color:#e59400;"></i>
+                  {% else %}
+                  <i class="fa-solid fa-star"></i>
+                  {% endif %}
+                </label>
+              </div>
+        </div>
+        {% endfor %}
+    </div>
+
+</div>
+
+{% endblock movie_content %}

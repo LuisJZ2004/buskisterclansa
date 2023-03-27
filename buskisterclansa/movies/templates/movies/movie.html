@@ -3,6 +3,7 @@
 
 {% block my_style %}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
 <style>
     main .main-container .title {
         {% comment %} border: 2px solid black; {% endcomment %}
@@ -55,21 +56,27 @@
         align-items: center
       }
 
-      .general-info .synopsis {
-        margin-top: 20px;
-        margin-left: 15px;
-        width: 750px;
+      .movie-center .synopsis {
+        width: 500px;
         text-align: left;
       }
 
-      .general-info .synopsis p {
-        font-size: 1.9rem;
+      .movie-center .synopsis p {
+        font-size: 2.0rem;
         font-family: 'Times New Roman', Times, serif;
       }
 
+
+      .general-info {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        align-items: center;
+      }
       .general-info .staff {
         align-items: center;
-        margin-left: 80px;
+        width: 250px;
+        margin-bottom: 10px;
       }
       .general-info .staff h4 {
         max-width: 250px;
@@ -87,53 +94,52 @@
       .general-info .staff a:hover {
         color: #9738ff;
       }
+      .general-info .staff .view-more {
+        margin-top: 10px;
+        font-size: 1.7rem;
+      } 
 
-      .cast .actor img{
-        border-radius: 50px;
+      .reviews .write-review{
+        padding: 10px;
+        padding-left: 5px;
+        max-width: 100vw;
+        display: flex;
+        justify-content: space-between;
       }
-      .cast .actor {
-        border: 2px solid black;
-        width: 350px;
+      .reviews a h1 {
+        font-family: 'Arial';
+        color: black;
+
+      }
+      .reviews a h1:hover {
+        color: #545454;
+      }
+      .reviews-container {
+        padding: 20px;
+      }
+      .reviews-container .review {
+        border: 1px solid black;
         margin-bottom: 10px;
+        padding: 5px;
         display: flex;
-        align-items: center
-      }
-
-      .cast{
-        border: 2px solid black;
-        padding: 30px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
+        flex-wrap: wrap;
+        justify-content: space-between;
         align-items: center;
       }
-      .cast .cast-title{
-        margin-bottom: 25px;
+      .reviews-container .review a {
+        font-family: 'Arial';
+        font-size: 1.9rem;
+        color: #00005a;
       }
-      .cast .cast-title h2 {
-        color: black;
-        font-family: Arial;
-        font-size: 3.0rem;
+      .reviews-container .review a:hover {
+        color: #0086bd;
       }
-      .cast .actor span{
-        margin-left: 20px;
+      .reviews-container .review div {
+        padding: 5px;
+        text-align: center;
+        width: 250px;
       }
-      .cast .actor span a {
-        font-size: 2.1rem;
-        font-family: Arial;
-        color: black;
-      }
-      .cast .actor span a:hover {
-        color: #747474;
-      }
-      .cast .view-more a h2{
-        font-size: 2.3rem;
-        font-family: monospace;
-        color: black;
-      }
-      .cast .view-more a h2:hover{
-        color: #747474;
-      }
+      
 </style>
 {% endblock my_style %}
 
@@ -143,10 +149,15 @@
     <div class="image-container">
         <img src="{{ movie.image.url }}" alt="movie image" width="170px" height="250px">
     </div>
+    <div class="synopsis">
+      <p>
+        {{ movie.synopsis }}
+      </p>
+    </div>
 
     {% comment %} <form action="{% url 'movies:like_dislike_path' movie_slug movie_pk %}" method="post"> {% endcomment %}
       
-        <div class="wrapper">
+        {% comment %} <div class="wrapper">
           <form action="{% url 'movies:like_dislike_path' movie_slug movie_pk %}" method="post">
             {% csrf_token %}
             <div class="like">
@@ -179,24 +190,17 @@
                 <h2>{{ dislike_count }}</h2>
             </div>
           </form>  
-        </div>
+        </div> {% endcomment %}
     {% comment %} </form> {% endcomment %}
 
 </div>
+
 <br>
-<br>
-<hr>
-<div class="general-info">
-  
-  <div class="synopsis">
-    <p>
-      {{ movie.synopsis }}
-    </p>
-  </div>
-  <br>
   <br>
   <hr>
   <br>
+
+<div class="general-info">
 
   <div class="staff">
     <span>
@@ -259,10 +263,127 @@
     <br>
     <br>
 
+    <span>
+      <h4>Starring</h4>
+
+      {% for actor in cast %}
+      <a href="">{{actor.name}},</a>
+      {% endfor %}
+    </span>
+
+    <br>
+    <br>
+
+    <a class="view-more" href="">View more...</a>
+
   </div>
+
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script type="text/javascript">
+    google.charts.load('current', {packages: ['corechart', 'bar']});
+    google.charts.setOnLoadCallback(drawBasic);
+
+    function drawBasic() {
+
+          var data = google.visualization.arrayToDataTable([
+            ['', '',],
+            ['', 0],
+            ['1 stars', "{{ stars_rating.1 }}"],
+            ['2 stars', "{{ stars_rating.2 }}"],
+            ['3 stars', "{{ stars_rating.3 }}"],
+            ['4 stars', "{{ stars_rating.4 }}"],
+            ['5 stars', "{{ stars_rating.5 }}"]
+          ]);
+
+          var options = {
+            title: 'rating',
+            chartArea: {width: '50%'},
+            hAxis: {
+              title: '',
+              minValue: 0
+            },
+            vAxis: {
+              title: 'rating'
+            }
+          };
+
+          var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+
+          chart.draw(data, options);
+      }
+    </script>
+    <div id="chart_div" style="border:1px solid black; width: 330px; height: 290px;"></div>
+
 </div>
 
-<div class="cast">
+<br>
+<hr>
+
+<div class="reviews">
+  <div class="write-review">
+    <a href="{% url 'movies:add_review_path' movie_slug movie_pk %}">
+      <h1>Write a review</h1>
+    </a>
+    <a href="{% url 'movies:movie_reviews_path' movie_slug movie_pk %}">
+      <h1>See all reviews</h1>
+    </a>
+  </div>
+
+  <div class="reviews-container">
+    {% for review in reviews %}
+    <div class="review">
+      <div class="username-container">
+        <a href="">{{review.user.username}}</a>
+      </div>
+      <div class="review-name-container">
+        <a href="{% url 'movies:review_path' movie.slug movie.pk review.pk %}">{{review.name}}</a>
+      </div>
+
+      <div class="rating-container" >
+        <label for="star-1" style="font-size:1.4rem">
+          {% if review.rate_by_stars >= 1  %}
+          <i class="fa-solid fa-star" style="color:#e59400;"></i>
+          {% else %}
+          <i class="fa-solid fa-star"></i>
+          {% endif %}
+        </label>
+        <label for="star-2" style="font-size:1.4rem">
+          {% if review.rate_by_stars >= 2  %}
+          <i class="fa-solid fa-star" style="color:#e59400;"></i>
+          {% else %}
+          <i class="fa-solid fa-star"></i>
+          {% endif %}
+        </label>
+        <label for="star-3" style="font-size:1.4rem">
+          {% if review.rate_by_stars >= 3  %}
+          <i class="fa-solid fa-star" style="color:#e59400;"></i>
+          {% else %}
+          <i class="fa-solid fa-star"></i>
+          {% endif %}
+        </label>
+        <label for="star-4" style="font-size:1.4rem">
+          {% if review.rate_by_stars >= 4  %}
+          <i class="fa-solid fa-star" style="color:#e59400;"></i>
+          {% else %}
+          <i class="fa-solid fa-star"></i>
+          {% endif %}
+        </label>
+        <label for="star-5" style="font-size:1.4rem">
+          {% if review.rate_by_stars >= 5  %}
+          <i class="fa-solid fa-star" style="color:#e59400;"></i>
+          {% else %}
+          <i class="fa-solid fa-star"></i>
+          {% endif %}
+        </label>
+      </div>
+        
+    </div>
+    {% endfor %}
+  </div>
+
+</div>
+
+{% comment %} <div class="cast">
   <div class="cast-title">
     <h2>Cast</h2>
   </div>
@@ -285,7 +406,7 @@
   </div>
   
   {% endif %}
-</div>
+</div> {% endcomment %}
 
 
 
