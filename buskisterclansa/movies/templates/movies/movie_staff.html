@@ -36,11 +36,11 @@
 </div>
 
 <div class="staff">
-    {% for person in job %}
+    {% for person in job.0 %}
     <div class="person">
         <img src={{ person.image.url }} alt="" width="110px" >
         <span>
-          <a href="">
+          <a href="{% url 'movie_staff:movie_staff_path' person.slug person.pk job.1 %}">
             {{ person.name }}
           </a>
         </span>

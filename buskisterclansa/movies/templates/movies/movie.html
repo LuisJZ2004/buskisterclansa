@@ -213,7 +213,7 @@
       <h4>Created by</h4>
 
       {% for creator in created_by %}
-      <a href="">{{creator.name}},</a>
+      <a href="{% url 'movie_staff:movie_staff_path' creator.slug creator.pk "created_by" %}">{{creator.name}},</a>
       {% endfor %}
     </span>
     <br>
@@ -223,7 +223,7 @@
       <h4>Directors</h4>
 
       {% for director in directors %}
-      <a href="">{{director.name}},</a>
+      <a href="{% url 'movie_staff:movie_staff_path' director.slug director.pk "director" %}">{{director.name}},</a>
       {% endfor %}
     </span>
     <br>
@@ -233,7 +233,7 @@
       <h4>Script</h4>
 
       {% for creator in script %}
-      <a href="">{{creator.name}},</a>
+      <a href="{% url 'movie_staff:movie_staff_path' creator.slug creator.pk "script" %}">{{creator.name}},</a>
       {% endfor %}
     </span>
     <br>
@@ -243,7 +243,7 @@
       <h4>Producers</h4>
 
       {% for creator in producers %}
-      <a href="">{{creator.name}},</a>
+      <a href="{% url 'movie_staff:movie_staff_path' creator.slug creator.pk "producer" %}">{{creator.name}},</a>
       {% endfor %}
     </span>
     <br>
@@ -263,14 +263,14 @@
       <h4>Starring</h4>
 
       {% for actor in cast %}
-      <a href="">{{actor.name}},</a>
+      <a href="{% url 'movie_staff:movie_staff_path' actor.slug actor.pk "cast" %}">{{actor.name}},</a>
       {% endfor %}
     </span>
 
     <br>
     <br>
 
-    <a class="view-more" href="">View more...</a>
+    <a class="view-more" href="{% url 'movies:staff_of_a_movie_path' movie.slug movie.pk "cast" %}">View more...</a>
 
   </div>
 

@@ -304,11 +304,11 @@ class StaffOfAMovieView(View):
     def __get_jobs(self, job: str):
         try:
             return {
-                "directors": self.movie.directors.all().order_by("director__order"),
-                "created_by": self.movie.created_by.all().order_by("createdby__order"),
-                "script": self.movie.scripts.all().order_by("script__order"),
-                "producers": self.movie.producers.all().order_by("producer__order"),
-                "cast": self.movie.casts.all().order_by("cast__order"),
+                "directors": (self.movie.directors.all().order_by("director__order"), "director",),
+                "created_by": (self.movie.created_by.all().order_by("createdby__order"), "created_by",),
+                "script": (self.movie.scripts.all().order_by("script__order"), "script",),
+                "producers": (self.movie.producers.all().order_by("producer__order"), "producer",),
+                "cast": (self.movie.casts.all().order_by("cast__order"), "cast",),
             }[job]
         except KeyError:
             raise Http404

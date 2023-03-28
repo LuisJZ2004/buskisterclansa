@@ -24,11 +24,11 @@ class MovieStaffView(DetailView):
     def __get_jobs(self, job: str):
         try:
             return {
-                "director": self.get_object().movie_director.all().order_by("director__order"),
-                "created_by": self.get_object().movie_created_by.all().order_by("createdby__order"),
-                "script": self.get_object().movie_script.all().order_by("script__order"),
-                "producer": self.get_object().movie_producer.all().order_by("producer__order"),
-                "cast": self.get_object().movie_cast.all().order_by("cast__order"),
+                "director": self.get_object().movie_director.all().order_by("year"),
+                "created_by": self.get_object().movie_created_by.all().order_by("year"),
+                "script": self.get_object().movie_script.all().order_by("year"),
+                "producer": self.get_object().movie_producer.all().order_by("year"),
+                "cast": self.get_object().movie_cast.all().order_by("year"),
             }[job]
         except KeyError:
             raise Http404
@@ -42,7 +42,7 @@ class MovieStaffView(DetailView):
     def get_context_data(self, **kwargs):
         return {
             self.context_object_name: self.get_object(),
-            "job": self.__get_jobs(self.kwargs.get("job")),
+            "movies": self.__get_jobs(self.kwargs.get("job")),
             "has_done_job": {
                 "director": object_exist(query_str="movie_staff__pk", value_to_query=self.get_object().pk, model=Director),
                 "cast": object_exist(query_str="movie_staff__pk", value_to_query=self.get_object().pk, model=Cast),
