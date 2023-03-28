@@ -1,0 +1,41 @@
+{% extends '../home/base_layout.html' %}
+{% load static %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'genres/css/genre.css' %}">
+{% endblock styles %}
+
+{% block content %}
+<main>
+    <div class="main-container">
+        <div class="title">
+            <h1>{{ genre.name }}</h1>
+        </div>
+        
+        <div class="movie-header">
+            <div class="header-item">
+                <a href="">
+                    <h3>
+                        Best rated
+                    </h3>
+                </a>
+            </div>
+            <div class="header-item">
+                <a href="">
+                    <h3>
+                        Most rated
+                    </h3>
+                </a>
+            </div>
+            <div class="header-item">
+                <a href="">
+                    <h3>
+                        Worst rated
+                    </h3>
+                </a>
+            </div>
+        </div>
+        
+    </div>
+</main>
+{% endblock content %}
