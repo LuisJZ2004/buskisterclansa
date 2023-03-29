@@ -1,6 +1,7 @@
 # Django
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import View, DetailView
+from django.http import Http404
 
 # This app
 from .models import Genre
@@ -14,3 +15,33 @@ class GenreView(DetailView):
         return self.model.objects.all()
     def get_object(self):
         return get_object_or_404(klass=self.get_queryset(), slug=self.kwargs.get("slug"))
+    def get(self, request, *args, **kwargs):
+        if not request.GET.get("rate"):
+            raise Http404
+        return super().get(request, *args, **kwargs)
+    
+    def __get_movies(self, option: str):
+        try:
+            return {
+                "best-rated": sorted(
+                    self.get_object().movie_set.all(),
+                    key=lambda q: q.get_stars_quantity(star=5)
+                )[:-1][:50],
+                "worst-rated": sorted(
+                    self.get_object().movie_set.all(),
+                    key=lambda q: q.get_stars_quantity(star=1)
+                )[:-1][:50],
+                "most-rated": sorted(
+                    self.get_object().movie_set.all(),
+                    key=lambda q: q.get_reviews_quantity()
+                )[:-1][:50]
+            }[option]
+        except KeyError:
+            raise Http404
+
+    def get_context_data(self, **kwargs):
+
+        return {
+            self.context_object_name: self.get_object(),
+            "movies": self.__get_movies(self.request.GET.get("rate"))
+        }

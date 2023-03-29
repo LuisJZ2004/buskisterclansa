@@ -37,23 +37,13 @@ class Movie(models.Model):
 
         return super().save(*args, **kwargs)
     
-    def given_like(self, user_id: int):
-        user = CustomUser.objects.get(pk=user_id)
+    def get_stars_quantity(self, star: int):
+        assert star <= 5 and star > 0, f" '{star}' is not a valid star"
 
-        try:
-            user.movielike_set.get(movie__pk=self.pk)
-            return True
-        except ObjectDoesNotExist:
-            return False
-        
-    def given_dislike(self, user_id: int):
-        user = CustomUser.objects.get(pk=user_id)
-
-        try:
-            user.moviedislike_set.get(movie__pk=self.pk)
-            return True
-        except ObjectDoesNotExist:
-            return False
+        return len(self.review_set.filter(rate_by_stars=star))
+    
+    def get_reviews_quantity(self):
+        return len(self.review_set.all())
 
 class Trailer(models.Model):
     movie = models.ForeignKey(to=Movie, on_delete=models.CASCADE)
@@ -104,21 +94,6 @@ class Script(models.Model):
 
     def __str__(self) -> str:
         return f"'{self.movie_staff.name}' as script of '{self.movie.name}'"
-
-# Like Dislike
-class MovieLike(models.Model):
-    movie = models.ForeignKey(to=Movie, on_delete=models.CASCADE)
-    user = models.ForeignKey(to=CustomUser, on_delete=models.CASCADE)
-
-    def __str__(self) -> str:
-        return f"{self.user.username} likes '{self.movie.name}'"
-    
-class MovieDislike(models.Model):
-    movie = models.ForeignKey(to=Movie, on_delete=models.CASCADE)
-    user = models.ForeignKey(to=CustomUser, on_delete=models.CASCADE)
-
-    def __str__(self) -> str:
-        return f"{self.user.username} dislikes '{self.movie.name}'"
 
 # Reviews    
 class Review(models.Model):
