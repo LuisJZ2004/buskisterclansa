@@ -21,8 +21,6 @@ main .main-container .title h1 {
 }
 
 main .main-container .movie-header {
-    border-top: 2px solid black; 
-    border-bottom: 2px solid black; 
     padding: 10px;
     display: flex;
     flex-wrap: wrap;
@@ -43,4 +41,35 @@ main .main-container .movie-header .header-item h3 {
 }
 main .main-container .movie-header .header-item a h3:hover {
     color: rgb(2, 94, 214);
+}
+
+main .main-container .movies-container .movie {
+    border-top: 2px solid black;
+    border-bottom: 2px solid black;
+    margin-top: 25px;
+    padding: 15px;
+    
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+main .main-container .movies-container .movie .image-container {
+    border: 2px solid black;
+    width: 154px;
+    height: 234px;;
+}
+main .main-container .movies-container .movie .name-container {
+    width: 250px;
+    padding: 7px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+main .main-container .movies-container .movie h3 {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 2.0rem;
+    color:rgb(0, 0, 50)
+}
+main .main-container .movies-container .movie a h3:hover{
+    color:rgb(2, 94, 214)
 }

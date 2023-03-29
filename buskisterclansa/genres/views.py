@@ -26,21 +26,20 @@ class GenreView(DetailView):
                 "best-rated": sorted(
                     self.get_object().movie_set.all(),
                     key=lambda q: q.get_stars_quantity(star=5)
-                )[:-1][:50],
+                )[::-1][:50],
                 "worst-rated": sorted(
                     self.get_object().movie_set.all(),
                     key=lambda q: q.get_stars_quantity(star=1)
-                )[:-1][:50],
+                )[::-1][:50],
                 "most-rated": sorted(
                     self.get_object().movie_set.all(),
                     key=lambda q: q.get_reviews_quantity()
-                )[:-1][:50]
+                )[::-1][:50]
             }[option]
         except KeyError:
             raise Http404
 
     def get_context_data(self, **kwargs):
-
         return {
             self.context_object_name: self.get_object(),
             "movies": self.__get_movies(self.request.GET.get("rate"))
