@@ -1,0 +1,141 @@
+{% extends '../home/base_layout.html' %}
+{% load static %}
+
+{% block styles %}
+<style>
+    main {
+        border: 2px solid white;
+        padding: 10px;
+        display: flex;
+        justify-content: center;
+    }
+    main .main-container {
+        border: 2px solid white;
+        min-width: 750px;
+        max-width: 900px;
+        min-height: 900px;
+        background-color: #c7c7c7;
+    }
+    main .main-container .title {
+        padding: 10px;
+        text-align: center;
+    }
+    main .main-container .title h1 {
+        font-size: 2.3rem;
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    }
+
+    main .main-container .title {
+        padding: 10px;
+        text-align: center;
+    }
+    main .main-container .title h1 {
+        font-size: 2.4rem;
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    }
+    main .main-container .center {
+        width: 100%;
+        padding: 20px;
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+    }
+    main .main-container .center .company-image {
+        border: 2px solid black;
+        height: 211px;
+    }
+    main .main-container .center .description {
+        padding: 10px;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 1.6rem;
+        width: 560px;
+    }
+
+    main .main-container .movies-container {
+        margin-top: 20px;
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+    }
+    main .main-container .movies-container .year {
+        padding: 15px;
+        text-align:center;
+    }
+    main .main-container .movies-container .year h2 {
+        font-family: Arial;
+        font-size: 2.0rem;
+    }
+    main .main-container .movies-container .movie {
+        border: 2px solid black;
+        border-radius: 20px;
+        padding: 7px;
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+    }
+    main .main-container .movies-container .movie .movie-image {
+        border: 2px solid black;
+        width: 174px;
+        height: 254px;
+    }
+    main .main-container .movies-container .movie .movie-name {
+        width: 250px;
+        height: 100px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+    }
+    main .main-container .movies-container .movie .movie-name h2 {
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        font-size: 2.0rem;
+        
+    }
+</style>
+{% endblock styles %}
+
+{% block content %}
+<main>
+    <div class="main-container">
+        <div class="title">
+            <h1>movies from {{ company.name }}</h1>
+        </div>        
+
+        <div class="center">
+            <div class="company-image">
+                <img src="{{ company.image.url }}" alt="" width="310px">
+            </div>
+            <div class="description">
+                <p>
+                    {{ company.description }}
+                </p>
+            </div>
+        </div>
+
+        <div class="movies-container">
+            {% for year, movies in years.items %}
+            <div class="year">
+                <h2>
+                    {{ year }}
+                </h2>
+            </div>
+                {% for movie in movies %}
+                <div class="movie">
+                    <div class="movie-image">
+                        <img src="{{ movie.image.url }}" alt="" width="170px" height="250px">
+                    </div>
+                    <div class="movie-name">
+                        <a href="{% url 'movies:movie_path' movie.slug movie.pk %}">
+                            <h2>
+                                {{ movie.name }}
+                            </h2>
+                        </a>
+                    </div>
+                </div>
+                {% endfor %}
+            {% endfor %}
+        </div>
+    </div>
+</main>
+{% endblock content %}
