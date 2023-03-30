@@ -92,6 +92,15 @@
         font-size: 2.0rem;
         
     }
+
+    .order-container {
+        margin-top: 20px;
+    }
+    .order-container select {
+        height: 22px;
+        border-radius: 7px;
+        margin-left: 60px;
+    }
 </style>
 {% endblock styles %}
 
@@ -115,7 +124,20 @@
 
         <div class="order-container">
             <select name="orden" onchange="window.location.href=this.value;">
-                <option value=""></option>
+                <option value="{% url 'companies:company_path' company.slug %}">
+                    Order
+                </option>
+                {% for order_key, order_value in orders.items %}
+                    {% if selected_order == order_value %}
+                    <option value="{% url 'companies:company_path' company.slug %}?order={{ order_value }}" selected>
+                        {{ order_key }}
+                    </option>
+                    {% else %}
+                    <option value="{% url 'companies:company_path' company.slug %}?order={{ order_value }}">
+                        {{ order_key }}
+                    </option>                    
+                    {% endif %}
+                {% endfor %}
             </select>
         </div>
 

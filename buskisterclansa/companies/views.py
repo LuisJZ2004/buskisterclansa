@@ -47,8 +47,10 @@ class CompanyView(DetailView):
         movies_with_their_years = None
         movies_with_their_quantities = None
 
-        if self.request.GET.get("order"):
-            order = int_or_404(self.request.GET.get("order"))
+        selected_order = self.request.GET.get("order")
+
+        if selected_order:
+            order = int_or_404(selected_order)
 
             if order == 1 or order == 0:
                 movies_with_their_years = self.get_object().get_movies_with_their_year(
@@ -65,5 +67,7 @@ class CompanyView(DetailView):
             self.context_object_name: self.get_object(),
             "years": movies_with_their_years,
             "movies": movies_with_their_quantities,
-            "orders": self.__get_orders_dict()
+            "orders": self.__get_orders_dict(),
+
+            "selected_order": selected_order,
         }
