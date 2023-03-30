@@ -18,13 +18,17 @@ class Company(models.Model):
 
         return super().save(*args, **kwargs)
     
-    def get_movie_years(self) -> tuple:
+    def get_movie_years(self, order="-year") -> tuple:
         return tuple(collections.Counter(
-            [str(movie.year.year) for movie in self.as_producer.all()]
+            [str(movie.year.year) for movie in self.as_producer.all().order_by(order)]
         ).keys())
     
-    def get_movies_sorted_by_year(self):
-        years = self.get_movie_years()
+    def get_movies_with_their_year(self, order=None) -> dict:
+        if order:
+            years = self.get_movie_years(order=order)
+        else:
+            years = self.get_movie_years()
+
         movies_by_years = {}
 
         for year in years:

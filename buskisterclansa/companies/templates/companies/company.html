@@ -58,13 +58,13 @@
         flex-direction: column;
         flex-wrap: wrap;
     }
-    main .main-container .movies-container .year {
+    main .main-container .movies-container .year, .reviews-quantity {
         padding: 15px;
         text-align:center;
     }
-    main .main-container .movies-container .year h2 {
+    main .main-container .movies-container .year, .reviews-quantity h2 {
         font-family: Arial;
-        font-size: 2.0rem;
+        font-size: 1.6rem;
     }
     main .main-container .movies-container .movie {
         border: 2px solid black;
@@ -113,28 +113,56 @@
             </div>
         </div>
 
+        <div class="order-container">
+            <select name="orden" onchange="window.location.href=this.value;">
+                <option value=""></option>
+            </select>
+        </div>
+
         <div class="movies-container">
-            {% for year, movies in years.items %}
-            <div class="year">
-                <h2>
-                    {{ year }}
-                </h2>
-            </div>
-                {% for movie in movies %}
-                <div class="movie">
-                    <div class="movie-image">
-                        <img src="{{ movie.image.url }}" alt="" width="170px" height="250px">
-                    </div>
-                    <div class="movie-name">
-                        <a href="{% url 'movies:movie_path' movie.slug movie.pk %}">
-                            <h2>
-                                {{ movie.name }}
-                            </h2>
-                        </a>
-                    </div>
+            {% if years %}
+                {% for year, movies in years.items %}
+                <div class="year">
+                    <h2>
+                        {{ year }}
+                    </h2>
                 </div>
+                    {% for movie in movies %}
+                    <div class="movie">
+                        <div class="movie-image">
+                            <img src="{{ movie.image.url }}" alt="" width="170px" height="250px">
+                        </div>
+                        <div class="movie-name">
+                            <a href="{% url 'movies:movie_path' movie.slug movie.pk %}">
+                                <h2>
+                                    {{ movie.name }}
+                                </h2>
+                            </a>
+                        </div>
+                    </div>
+                    {% endfor %}
                 {% endfor %}
-            {% endfor %}
+            {% else %}
+                {% for movie in movies %}
+                    <div class="reviews-quantity">
+                        <h2>
+                            {{ movie.get_reviews_quantity }} reviews
+                        </h2>
+                    </div>
+                    <div class="movie">
+                        <div class="movie-image">
+                            <img src="{{ movie.image.url }}" alt="" width="170px" height="250px">
+                        </div>
+                        <div class="movie-name">
+                            <a href="{% url 'movies:movie_path' movie.slug movie.pk %}">
+                                <h2>
+                                    {{ movie.name }}
+                                </h2>
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
         </div>
     </div>
 </main>
