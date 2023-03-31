@@ -16,15 +16,16 @@ class SearchView(View):
 
         search = request.GET.get("search-bar")
 
-        movies = Movie.objects.filter(name__icontains=search)
-        staff = MovieStaff.objects.filter(name__icontains=search)
+        movies = sorted(Movie.objects.filter(name__icontains=search), key=lambda t: t.get_reviews_quantity())[::-1]
+        staff = sorted(MovieStaff.objects.filter(name__icontains=search), key=lambda t: t.get_total_review_of_this_staff_movie())[::-1]
 
+        print(staff)
         return render(
             request=request,
             template_name=self.template_name,
             context={
                 "search": request.GET.get("search-bar"),
-                "movies": movies,
-                "staff": staff,
+                "movies": movies if request.GET.get("filter") != "1" else None,
+                "staff": staff if request.GET.get("filter") != "0" else None,
             }
         )

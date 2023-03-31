@@ -53,6 +53,82 @@
         color: #424040;
     }
 
+    .results-container .title {
+        text-align: center;
+        margin-top: 15px;
+    }
+    .results-container .title h2 {
+        font-size: 2.0rem;
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    }   
+    .results-container .movies {
+        margin-top: 20px; 
+    }
+    .results-container .movies .movie {
+        border-top: 2px solid black;
+        border-bottom: 2px solid black;
+        margin-bottom: 20px;
+        border-radius: 20px;
+        padding: 10px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-evenly;
+        align-items center;
+    }
+    .results-container .movies .movie .movie-name {
+        padding: 5px;
+        width: 300px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .results-container .movies .movie .movie-name h2 {
+        color: black;
+        font-family: 'Arial';
+        font-size: 2.1rem;
+    }
+    .results-container .movies .movie .movie-name a h2:hover {
+        color: #424040;
+    }
+
+    .results-container .title {
+        text-align: center;
+        margin-top: 15px;
+    }
+    .results-container .title h2 {
+        font-size: 2.0rem;
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    }   
+    .results-container .staff {
+        margin-top: 20px; 
+    }
+    .results-container .staff .person {
+        border-top: 2px solid black;
+        border-bottom: 2px solid black;
+        margin-bottom: 20px;
+        border-radius: 20px;
+        padding: 10px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-evenly;
+        align-items center;
+    }
+    .results-container .staff .person .person-name {
+        padding: 5px;
+        width: 300px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .results-container .staff .person .person-name h2 {
+        color: black;
+        font-family: 'Arial';
+        font-size: 2.1rem;
+    }
+    .results-container .staff .person .person-name a h2:hover {
+        color: #424040;
+    }
+
 </style>
 {% endblock styles %}
 
@@ -65,7 +141,7 @@
         
         <div class="movie-header">
             <div>
-                <a href="">
+                <a href="{% url 'search:search_path' %}?search-bar={{search}}">
                     <h3>
                         all
                     </h3>
@@ -73,20 +149,67 @@
             </div>
             <div class="options">
                 <div class="header-item">
-                    <a href="">
+                    <a href="{% url 'search:search_path' %}?search-bar={{search}}&filter=0">
                         <h3>
                             movies
                         </h3>
                     </a>
                 </div>
                 <div class="header-item">
-                    <a href="">
+                    <a href="{% url 'search:search_path' %}?search-bar={{search}}&filter=1">
                         <h3>
                             people
                         </h3>
                     </a>
                 </div>
             </div>
+        </div>
+
+        <div class="results-container">
+            {% if movies %}
+            <div class="movies">
+                <div class="title">
+                    <h2>Movies</h2>
+                </div>
+                
+                {% for movie in movies %}
+                    <div class="movie">
+                        <img src="{{ movie.image.url }}" alt="" width="140px" height="220px">
+                        <div class="movie-name">
+                            <a href="{% url 'movies:movie_path' movie.slug movie.pk %}">
+                                <h2>
+                                    {{ movie.name }}
+                                </h2>
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
+
+            </div>
+            {% endif %}
+
+            {% if staff %}
+                <div class="staff">
+                    <div class="title">
+                        <h2>People</h2>
+                    </div>
+                    
+                    {% for person in staff %}
+                        <div class="person">
+                            <img src="{{ person.image.url }}" alt="" width="160px" >
+                            <div class="person-name">
+                                <a href="{% url 'movie_staff:movie_staff_path' person.slug person.pk "cast" %}">
+                                    <h2>
+                                        {{ person.name }}
+                                    </h2>
+                                </a>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                </div>
+            
+            {% endif %}
         </div>
     </div>
 </main>
