@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'genres.apps.GenresConfig',
     'movie_staff.apps.MovieStaffConfig',
     'extra_logic.apps.ExtraLogicConfig',
+    'search.apps.SearchConfig',
 
     # Default apps
     'django.contrib.admin',

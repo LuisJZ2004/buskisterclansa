@@ -26,4 +26,5 @@ urlpatterns = [
     path('companies/', include("companies.urls")),
     path('genres/', include("genres.urls")),
     path('movie-staff/', include("movie_staff.urls")),
+    path('search/', include("search.urls")),
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
