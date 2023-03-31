@@ -1,2 +1,93 @@
 {% extends '../home/base_layout.html' %}
 {% load static %}
+
+{% block styles %}
+<style>
+    main {
+        border: 2px solid white;
+        padding: 10px;
+        display: flex;
+        justify-content: center;
+    }
+    main .main-container {
+        border: 2px solid white;
+        min-width: 700px;
+        max-width: 900px;
+        min-height: 900px;
+        background-color: #c7c7c7;
+    }
+    main .main-container .title {
+        padding: 7px;
+    }
+    .title h1 {
+        font-size: 2.2rem;
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    }
+
+    .movie-header {
+        margin-top: 10px;
+        border-top: 2px solid black;
+        border-bottom: 2px solid black;
+        padding: 7px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+    .movie-header div {
+        width: 100px;
+        margin-right: 5px;
+        padding: 3px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .movie-header .options div{
+        margin-right: 15px;
+    }
+    .movie-header div h3 {
+        font-family: 'Arial';
+        font-size: 1.6rem;
+        color: black;
+    }
+    .movie-header div a h3:hover {
+        color: #424040;
+    }
+
+</style>
+{% endblock styles %}
+
+{% block content %}
+<main>
+    <div class="main-container">
+        <div class="title">
+            <h1>results of '{{ search }}' </h1>
+        </div>
+        
+        <div class="movie-header">
+            <div>
+                <a href="">
+                    <h3>
+                        all
+                    </h3>
+                </a>
+            </div>
+            <div class="options">
+                <div class="header-item">
+                    <a href="">
+                        <h3>
+                            movies
+                        </h3>
+                    </a>
+                </div>
+                <div class="header-item">
+                    <a href="">
+                        <h3>
+                            people
+                        </h3>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock content %}
