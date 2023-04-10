@@ -21,22 +21,22 @@ class GenreView(DetailView):
         return super().get(request, *args, **kwargs)
     
     def __get_movies(self, option: str):
-        try:
-            return {
-                "best-rated": sorted(
-                    self.get_object().movie_set.all(),
-                    key=lambda q: q.get_stars_quantity(star=5)
-                )[::-1][:50],
-                "worst-rated": sorted(
-                    self.get_object().movie_set.all(),
-                    key=lambda q: q.get_stars_quantity(star=1)
-                )[::-1][:50],
-                "most-rated": sorted(
-                    self.get_object().movie_set.all(),
-                    key=lambda q: q.get_reviews_quantity()
-                )[::-1][:50]
-            }[option]
-        except KeyError:
+        if option == "best-rated":
+            return sorted(
+                self.get_object().movie_set.all(),
+                key=lambda q: q.get_stars_quantity(star=5)
+            )[::-1][:50]
+        elif option == "worst-rated":
+            return sorted(
+                self.get_object().movie_set.all(),
+                key=lambda q: q.get_stars_quantity(star=1)
+            )[::-1][:50]
+        elif option == "most-rated":
+            return sorted(
+                self.get_object().movie_set.all(),
+                key=lambda q: q.get_reviews_quantity()
+            )[::-1][:50]
+        else:
             raise Http404
 
     def get_context_data(self, **kwargs):

@@ -14,21 +14,21 @@
         
         <div class="movie-header">
             <div class="header-item">
-                <a href="">
+                <a href="{% url 'genres:genre_path' genre.slug %}?rate=best-rated">
                     <h3>
                         Best rated
                     </h3>
                 </a>
             </div>
             <div class="header-item">
-                <a href="">
+                <a href="{% url 'genres:genre_path' genre.slug %}?rate=most-rated">
                     <h3>
                         Most rated
                     </h3>
                 </a>
             </div>
             <div class="header-item">
-                <a href="">
+                <a href="{% url 'genres:genre_path' genre.slug %}?rate=worst-rated">
                     <h3>
                         Worst rated
                     </h3>

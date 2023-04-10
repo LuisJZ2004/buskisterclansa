@@ -203,7 +203,7 @@
       <h4>genres</h4>
 
       {% for genre in movie.genres.all %}
-      <a href="">{{genre.name}},</a>
+      <a href="{% url 'genres:genre_path' genre.slug %}?rate=best-rated">{{genre.name}},</a>
       {% endfor %}
     </span>
     <br>
@@ -253,7 +253,7 @@
       <h4>Producer companies</h4>
 
       {% for company in companies %}
-      <a href="">{{company.name}},</a>
+      <a href="{% url 'companies:company_path' company.slug %}">{{company.name}},</a>
       {% endfor %}
     </span>
     <br>
