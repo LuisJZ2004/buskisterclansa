@@ -51,7 +51,11 @@ class MovieView(DetailView):
         return context
     
 class DragMovieStaffView(View):
-
+    """
+    This view is to change the order in which the staff of a movie is showed. In a movie 
+    there are more important characters than others, you won't show an extra before the main characters,
+    they must have an order of appearance, and, changeable, this is achieved with a draggable list with JS
+    """
     def dispatch(self, request, *args, **kwargs):
         self.movie = get_object_or_404(klass=Movie, pk=kwargs.get("pk"), slug=kwargs.get("slug"))
         if request.user.is_authenticated:
@@ -104,6 +108,8 @@ class MovieReviewsListView(ListView):
     template_name = "movies/reviews.html"
     context_object_name = "reviews"
 
+    # The goal of this methods and this way I'm sending and receiving the filters is to not 
+    # put query names (like "person__pk" for example) in the endpoints, making it more secure of injections
     def __get_orders_indexes(self):
         return {
             "stars (higher to lower)": "0",

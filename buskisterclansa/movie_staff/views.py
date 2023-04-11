@@ -21,6 +21,10 @@ class MovieStaffView(DetailView):
     template_name = "movie_staff/movie_staff.html"
 
     def __get_jobs(self, job: str):
+        """
+        Returns all the movies the current staff has been as the job sent. For example:
+        If job == "director", would return all the movies the staff has been as director.
+        """
         try:
             return {
                 "director": self.get_object().movie_director.all().order_by("year"),
@@ -42,6 +46,7 @@ class MovieStaffView(DetailView):
             self.context_object_name: self.get_object(),
             "movies": self.__get_jobs(self.kwargs.get("job")),
             "has_done_job": {
+                # The object_exists are in order to the job links are or not in the template if the staff has done them or not
                 "director": object_exist(query_str="movie_staff__pk", value_to_query=self.get_object().pk, model=Director),
                 "cast": object_exist(query_str="movie_staff__pk", value_to_query=self.get_object().pk, model=Cast),
                 "script": object_exist(query_str="movie_staff__pk", value_to_query=self.get_object().pk, model=Script),
