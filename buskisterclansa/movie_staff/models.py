@@ -36,3 +36,21 @@ class MovieStaff(models.Model):
             total += movie.get_reviews_quantity()
 
         return total
+    
+    def get_all_movies(self):
+
+        movies = [
+            self.movie_director.all().order_by("year"),
+            self.movie_script.all().order_by("year"),
+            self.movie_producer.all().order_by("year"),
+            self.movie_cast.all().order_by("year"),
+        ]
+
+        final_movies = []
+
+        for i in range(4):
+            for movie in movies[i]:
+                if movie not in final_movies:
+                    final_movies.append(movie)
+
+        return final_movies

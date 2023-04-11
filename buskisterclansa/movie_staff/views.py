@@ -27,6 +27,7 @@ class MovieStaffView(DetailView):
         """
         try:
             return {
+                "all": self.get_object().get_all_movies(),
                 "director": self.get_object().movie_director.all().order_by("year"),
                 "script": self.get_object().movie_script.all().order_by("year"),
                 "producer": self.get_object().movie_producer.all().order_by("year"),

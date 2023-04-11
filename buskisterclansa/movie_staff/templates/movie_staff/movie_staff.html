@@ -24,6 +24,11 @@
         </div>
 
         <div class="staff-items">
+            <div>
+                <a href="{% url 'movie_staff:movie_staff_path' staff.slug staff.pk "all" %}">
+                    All
+                </a>
+            </div>
             {% if has_done_job.cast %}
             <div>
                 <a href="{% url 'movie_staff:movie_staff_path' staff.slug staff.pk "cast" %}">
@@ -36,14 +41,6 @@
             <div>
                 <a href="{% url 'movie_staff:movie_staff_path' staff.slug staff.pk "director" %}">
                     Director
-                </a>
-            </div>
-            {% endif %}
-
-            {% if has_done_job.created_by %}
-            <div>
-                <a href="{% url 'movie_staff:movie_staff_path' staff.slug staff.pk "created_by" %}">
-                    Creations
                 </a>
             </div>
             {% endif %}

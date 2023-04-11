@@ -198,7 +198,7 @@
                         <div class="person">
                             <img src="{{ person.image.url }}" alt="" width="160px" >
                             <div class="person-name">
-                                <a href="{% url 'movie_staff:movie_staff_path' person.slug person.pk "cast" %}">
+                                <a href="{% url 'movie_staff:movie_staff_path' person.slug person.pk "all" %}">
                                     <h2>
                                         {{ person.name }}
                                     </h2>
