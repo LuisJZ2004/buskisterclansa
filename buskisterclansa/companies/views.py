@@ -20,6 +20,9 @@ class CompanyView(DetailView):
     def get_object(self, *args, **kwargs):
         return get_object_or_404(klass=self.get_queryset(), slug=self.kwargs.get("slug"))
     
+    # The goal of these methods was not to put the direct order name in the enpoints, and instead of that
+    # just numbers. Ex: instead of '?order="-year"', this: '?order=0'. So, Users don't put a attribute/query in the
+    # endpoint
     def __get_orders_dict(self):
         return {
             "years (recent to old)": "0",
@@ -31,10 +34,6 @@ class CompanyView(DetailView):
         return (
             "-year",
             "year",
-            # movies.objects.all().order_by("-years"),
-            # movies.objects.all().order_by("years"),
-            # sorted(movies.objects.all(), key= lambda t: t.get_reviews_quantity())[::-1],
-            # sorted(movies.objects.all(), key= lambda t: t.get_reviews_quantity()),
         )[option]
     def __get_orders_by_reviews(self, movies: QuerySet, option: int):
         return (
@@ -43,8 +42,10 @@ class CompanyView(DetailView):
         )[option]
 
     def get_context_data(self, **kwargs):
-        
+        # The filter is just orders
+        # if it's by years, they'll be in this var
         movies_with_their_years = None
+        # if it's by reviews quantities, they'll be in this var
         movies_with_their_quantities = None
 
         selected_order = self.request.GET.get("order")
@@ -53,14 +54,17 @@ class CompanyView(DetailView):
             order = int_or_404(selected_order)
 
             if order == 1 or order == 0:
+                # 0 and 1 are years orders
                 movies_with_their_years = self.get_object().get_movies_with_their_year(
                     order=self.__get_orders_years_queries(order)
                 )
+                # 2 and 3 are reviews orders
             elif order == 2 or order == 3:
                 movies_with_their_quantities = self.__get_orders_by_reviews(self.get_object().as_producer.all(), order-2)
             else:
                 raise Http404
         else:
+            # if not selected_order, it is ordered by years, lastest to oldest
             movies_with_their_years = self.get_object().get_movies_with_their_year()
 
         return {

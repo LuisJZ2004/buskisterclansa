@@ -10,7 +10,6 @@ from movies.models import (
     Script,
     Cast,
     Producer,
-    CreatedBy,
 )
 
 # This app
@@ -25,7 +24,6 @@ class MovieStaffView(DetailView):
         try:
             return {
                 "director": self.get_object().movie_director.all().order_by("year"),
-                "created_by": self.get_object().movie_created_by.all().order_by("year"),
                 "script": self.get_object().movie_script.all().order_by("year"),
                 "producer": self.get_object().movie_producer.all().order_by("year"),
                 "cast": self.get_object().movie_cast.all().order_by("year"),
@@ -46,7 +44,6 @@ class MovieStaffView(DetailView):
             "has_done_job": {
                 "director": object_exist(query_str="movie_staff__pk", value_to_query=self.get_object().pk, model=Director),
                 "cast": object_exist(query_str="movie_staff__pk", value_to_query=self.get_object().pk, model=Cast),
-                "created_by": object_exist(query_str="movie_staff__pk", value_to_query=self.get_object().pk, model=CreatedBy),
                 "script": object_exist(query_str="movie_staff__pk", value_to_query=self.get_object().pk, model=Script),
                 "producer": object_exist(query_str="movie_staff__pk", value_to_query=self.get_object().pk, model=Producer), 
             },

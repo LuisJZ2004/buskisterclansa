@@ -21,7 +21,6 @@ class Movie(models.Model):
 
     genres = models.ManyToManyField(to=Genre)
 
-    created_by = models.ManyToManyField(to=MovieStaff, through="CreatedBy", related_name="movie_created_by")
     directors = models.ManyToManyField(to=MovieStaff, through="Director", related_name="movie_director")
     casts = models.ManyToManyField(to=MovieStaff, through="Cast", related_name="movie_cast")
     producers = models.ManyToManyField(to=MovieStaff, through="Producer", related_name="movie_producer")
@@ -45,19 +44,7 @@ class Movie(models.Model):
     def get_reviews_quantity(self):
         return len(self.review_set.all())
 
-class Trailer(models.Model):
-    movie = models.ForeignKey(to=Movie, on_delete=models.CASCADE)
-    url = models.URLField(max_length=100, unique=True, blank=False, null=False)
 
-
-class CreatedBy(models.Model):
-    movie = models.ForeignKey(to=Movie, on_delete=models.CASCADE)
-    movie_staff = models.ForeignKey(to=MovieStaff, on_delete=models.CASCADE)
-
-    order = models.IntegerField(default=0, blank=False, null=False)
-
-    def __str__(self) -> str:
-        return f"'{self.movie_staff.name}' as creator of '{self.movie.name}'"
 
 class Cast(models.Model):
     movie = models.ForeignKey(to=Movie, on_delete=models.CASCADE)
@@ -152,11 +139,3 @@ class ReviewComment(models.Model):
     user = models.ForeignKey(to=CustomUser, on_delete=models.CASCADE)
 
     content = models.TextField(max_length=300, null=False, blank=False,)
-
-class CommentLike(models.Model):
-    comment = models.ForeignKey(to=ReviewComment, on_delete=models.CASCADE)
-    user = models.ForeignKey(to=CustomUser, on_delete=models.CASCADE)
-
-class CommentDislike(models.Model):
-    comment = models.ForeignKey(to=ReviewComment, on_delete=models.CASCADE)
-    user = models.ForeignKey(to=CustomUser, on_delete=models.CASCADE)

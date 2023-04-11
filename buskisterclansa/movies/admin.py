@@ -1,16 +1,14 @@
 from django.contrib import admin
-from .models import Movie, Cast, CreatedBy, Director, Script, Producer, Trailer, Review, ReviewComment
+from .models import Movie, Cast, Director, Script, Producer, Review, ReviewComment
 # Register your models here.
 
 admin.site.register(
     (
         Movie,
         Cast, 
-        CreatedBy, 
         Director, 
         Script, 
         Producer,
-        Trailer,
         Review,
         ReviewComment,
     )

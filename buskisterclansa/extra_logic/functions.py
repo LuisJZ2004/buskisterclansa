@@ -5,7 +5,11 @@ from django.core.exceptions import MultipleObjectsReturned, ObjectDoesNotExist
 
 def make_pagination(queryset: QuerySet, page_number: int, pagination_number: int):
     """
-    Paginates a queryset
+    Paginates a queryset.
+
+    page_number: the page number you want
+    pagination_number: the number of objects you want by each page
+
     """
     assert page_number != 0, "you can't paginate from zero"
     return queryset[pagination_number*(page_number-1):(pagination_number*(page_number-1)+pagination_number)]

@@ -210,16 +210,6 @@
     <br>
 
     <span>
-      <h4>Created by</h4>
-
-      {% for creator in created_by %}
-      <a href="{% url 'movie_staff:movie_staff_path' creator.slug creator.pk "created_by" %}">{{creator.name}},</a>
-      {% endfor %}
-    </span>
-    <br>
-    <br>
-
-    <span>
       <h4>Directors</h4>
 
       {% for director in directors %}

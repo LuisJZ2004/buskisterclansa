@@ -21,6 +21,9 @@ class GenreView(DetailView):
         return super().get(request, *args, **kwargs)
     
     def __get_movies(self, option: str):
+        """
+        get movies sorted by the sent option
+        """
         if option == "best-rated":
             return sorted(
                 self.get_object().movie_set.all(),

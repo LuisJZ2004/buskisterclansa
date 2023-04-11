@@ -28,10 +28,9 @@ class MovieView(DetailView):
 
         context = {
             self.context_object_name: self.get_object(),
-            "directors": self.get_object().directors.all().order_by("director__order"),
-            "created_by": self.get_object().created_by.all().order_by("createdby__order"),
-            "script": self.get_object().scripts.all().order_by("script__order"),
-            "producers": self.get_object().producers.all().order_by("producer__order"),
+            "directors": self.get_object().directors.all().order_by("director__order")[:3],
+            "script": self.get_object().scripts.all().order_by("script__order")[:3],
+            "producers": self.get_object().producers.all().order_by("producer__order")[:3],
             "cast": self.get_object().casts.all().order_by("cast__order")[:3],
             "companies": self.get_object().producer_companies.all(),
             "cast_len": len(self.get_object().casts.all().order_by("cast__order")),
@@ -63,7 +62,6 @@ class DragMovieStaffView(View):
 
     def __get_relation_staff(self):
         return {
-                "created_by": self.movie.createdby_set.all().order_by("order"),
                 "cast": self.movie.cast_set.all().order_by("order"),
                 "director": self.movie.director_set.all().order_by("order"),
                 "producer": self.movie.producer_set.all().order_by("order"),
@@ -305,7 +303,6 @@ class StaffOfAMovieView(View):
         try:
             return {
                 "directors": (self.movie.directors.all().order_by("director__order"), "director",),
-                "created_by": (self.movie.created_by.all().order_by("createdby__order"), "created_by",),
                 "script": (self.movie.scripts.all().order_by("script__order"), "script",),
                 "producers": (self.movie.producers.all().order_by("producer__order"), "producer",),
                 "cast": (self.movie.casts.all().order_by("cast__order"), "cast",),

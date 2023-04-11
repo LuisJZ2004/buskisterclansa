@@ -25,7 +25,6 @@ class MovieStaff(models.Model):
         returns the total reviews of all the movies in which this staff is
         """
         movies = MovieModels.Movie.objects.filter(
-            models.Q(created_by__name = self.name) |
             models.Q(directors__name = self.name) |
             models.Q(casts__name = self.name) |
             models.Q(producers__name = self.name) |
