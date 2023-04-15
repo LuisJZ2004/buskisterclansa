@@ -1,7 +1,7 @@
 # Buskisterclansa
 a sort of social media/forum about movies inspired by pages like IMDB, FilmAffinity or Rotten Tomatoes. It counts with reviews by stars and like/dislike systems, several simple filter systems like orders and advanced pagination, search and login/singin. It is obvously not perfect, it needs and will have many other things in future updates, like a responsive frontend (yes, it isn't responsive yet), more models and better user expiriences.
 
-Video (click the 720 resolution to watch it better): https://www.youtube.com/watch?v=j_O-HbEQruQ
+Video (click the 720 resolution to watch it better): https://youtu.be/lI2_V_1gLR0
 
 ## Required knowledge
 - Intermediate/advanced Python and Django.
